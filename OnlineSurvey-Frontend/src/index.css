@@ -1,0 +1,48 @@
+:root, #root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #ffffff;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  display: flex;
+}
+
+p{
+  margin: 0;
+  font-size: 1.2rem;
+}
+input{
+  padding: 0.5rem;
+  border-radius: 10px;
+  margin: 0.5rem;
+  
+}
+
+button{
+  background-color: rgb(51, 62, 223);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  transition-duration: 0.3s;
+
+  
+}
+button:hover{
+    background-color: rgb(37, 47, 192);
+  }
+
+h1,h2{
+  margin: 0;
+}

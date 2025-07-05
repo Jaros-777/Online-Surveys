@@ -1,0 +1,102 @@
+#main-page {
+    
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    #first {
+        width: 90rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5rem 0;
+
+
+        #description {
+            width: 45%;
+            margin-right: 2.5%;
+
+            #main-text {
+                display: flex;
+
+                p {
+                    font-weight: bold;
+                    overflow: hidden;
+                    text-wrap: nowrap;
+
+                    &:first-child {
+                        font-size: 56px;
+                    }
+
+                    &:last-child {
+                        margin-left: 0.5rem;
+                        font-size: 2rem;
+                    }
+                }
+
+
+            }
+
+            #content {
+                margin: 2rem 0;
+            }
+
+            ul {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                li{
+                    margin-left: 7%;
+                    width: 90%;
+                }
+            }
+
+            #start-container {
+                background-color: rgb(201, 201, 201);
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.5rem;
+                border-radius: 20px;
+                margin-top: 3rem;
+
+                input {
+                    border: none;
+                    background-color: rgba(255, 255, 255, 0);
+                    font-size: 1.2rem;
+
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
+                }
+
+                button {
+                    height: 100%;
+                    text-align: center;
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        #description-image {
+            width: 45%;
+            margin-left: 2.5%;
+
+            img {
+                object-fit: contain;
+                width: 100%;
+            }
+        }
+    }
+
+    #second{
+        height: 100rem;
+    }
+
+
+}
