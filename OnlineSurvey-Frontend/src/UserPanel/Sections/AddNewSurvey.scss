@@ -1,0 +1,34 @@
+#new-survey-container{
+    background-color: lightgreen;
+    width: 90%;
+
+    .render-module{
+        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+
+        input{
+            width: 100%;
+            padding: 1rem;
+            margin: 0;
+            border: none;
+            &:focus{
+                outline: none;
+                box-shadow: none;
+            }
+        }
+
+        #answer-type{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 2rem;
+            p{
+                font-size: 1rem;
+            }
+        }
+    }
+}
