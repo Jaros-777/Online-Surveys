@@ -2,8 +2,8 @@
 Online Surveys is a simple but functional web project that allows anyone - from curious students to future data analysts - to create their own online surveys and collect responses from users. The project was created with learning in mind, not to dominate the survey tooli market.... still 😉  
 
 🛠 Technologies  
-- Frontend: React.js - dynamic, responsive, just interactively beautiful.  
-- Backend: Java Spring Boot - stable as a rock, fast as lightning.  
+- Frontend: React.js  
+- Backend: Java Spring Boot
 - Database: currently H2 and eventually PostgreSQL  
 
 🎯 Features  
