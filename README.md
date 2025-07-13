@@ -14,3 +14,7 @@ Online Surveys is a simple but functional web project that allows anyone - from 
 
 🚀 Purpose of the project  
 The project serves an educational purpose - it's a testing ground for learning modern web technologies, client-server architecture and creating full-fledged CRUD applications.  
+
+🧑‍💻 For testing in develompent - localhost:  
+- "/" - Front Page
+- "/panel" - User Panel
