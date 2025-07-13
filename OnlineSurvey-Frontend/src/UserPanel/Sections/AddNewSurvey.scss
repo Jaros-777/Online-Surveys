@@ -1,34 +1,35 @@
 #new-survey-container{
-    background-color: lightgreen;
-    width: 90%;
+    // background-color: lightgreen;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    .render-module{
-        border: 2px solid black;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-
-        input{
+    #description{
+        width: 100%;
+        
+        textarea{
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
             width: 100%;
-            padding: 1rem;
-            margin: 0;
-            border: none;
+            height: 5rem;
+            resize: none;
+            padding: 0.5rem;
+            background-color: #ffffff00;
+
             &:focus{
-                outline: none;
-                box-shadow: none;
-            }
-        }
-
-        #answer-type{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            margin-top: 2rem;
-            p{
-                font-size: 1rem;
+                 outline: 1px solid black;
             }
         }
     }
+
+    #answer-option{
+        width: 100%;
+        margin: 2rem 0;
+        
+        .option{
+            display: flex;
+        }
+    }
+    
 }
