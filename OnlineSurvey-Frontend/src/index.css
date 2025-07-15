@@ -16,6 +16,12 @@ body {
   min-width: 320px;
   min-height: 100vh;
   display: flex;
+
+  --main-grey: #E5E8EB;
+  --darker-grey: #dadbdb;
+  --main-blue: #0A80ED;
+  --main-red:rgb(240, 2, 2);
+  --darker-red:rgb(156, 2, 2);
 }
 
 p{
@@ -23,29 +29,30 @@ p{
   font-size: 1.2rem;
 }
 input{
-  padding: 0.5rem;
-  border-radius: 10px;
-  margin: 0.5rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
   background-color: #ffffff00;
+  outline: var(--main-grey);
+  border: 2px solid var(--main-grey);
 }
 
 button{
-  background-color: rgb(51, 62, 223);
+  background-color: var(--main-blue);
   padding: 1rem 1.5rem;
-  border-radius: 10px;
+  border-radius: 20px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   color: white;
   text-align: center;
   transition-duration: 0.3s;
-
+  border: none;
   
 }
 button:hover{
     background-color: rgb(37, 47, 192);
   }
 
-h1,h2{
+h1,h2,h3{
   margin: 0;
 }

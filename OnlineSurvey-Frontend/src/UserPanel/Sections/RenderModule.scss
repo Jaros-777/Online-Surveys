@@ -1,76 +1,110 @@
-.render-module{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        // background-color: white;
-        margin-bottom: 1rem;
+.render-module {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    // border: 1px solid var(--main-grey);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
+    border: 2px solid var(--main-grey);
+    border-left: none;
+
+    button {
+            font-size: 0.9rem;
+        }
+
+    #deleteQuestion {
+        height: 3rem;
         width: 100%;
-        border: 1px solid black;
-        padding-bottom: 1rem;
-        // border-radius: 20px;
+        display: flex;
+        justify-content: end;
 
-        #deleteQuestion{
-            height: 3rem;
-            width: 100%;
-            display: flex;
-            justify-content: end;
+        button {
+            height: 100%;
+            padding: 0.2rem;
+            aspect-ratio: 1/1;
+            border-radius: 0 12px 0 12px;
+            background-color: var(--main-red);
 
-            button{
-                height: 100%;
-                padding: 0.2rem;
-                aspect-ratio: 1/1;
-                border-radius: 0px;
-                border-bottom-left-radius: 10px;
+            &:hover{
+                background-color: var(--darker-red);
             }
-        }
 
-        input{
-            width: 90%;
-            padding: 1rem;
-            margin: 0;
-            border: none;
-            border-bottom: 2px solid black;
-            border-radius: 0;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            &:focus{
-                outline: none;
-                box-shadow: none;
-                background-color: rgb(204, 204, 204);
-            }
         }
+    }
 
-        #answer-type{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            margin-top: 2rem;
-            p{
-                font-size: 1rem;
-            }
-        }
-        #info{
-            margin: 2rem 0;
-        }
 
-        .answer{
-            display: flex;
-            align-items: center;
-            width: 90%;
-            margin: 1rem 0;
+    input {
+        width: 60%;
+        // padding: 1rem;
+        // margin: 0;
+        // border: none;
+        // border-bottom: 2px solid black;
+        // border-radius: 0;
+        // border-top-left-radius: 10px;
+        // border-top-right-radius: 10px;
+        // &:focus{
+        //     outline: none;
+        //     box-shadow: none;
+        //     background-color: rgb(204, 204, 204);
+        // }
+    }
 
-            input{
-                width: 15%;
-                    margin: 0 0.5rem;
-                &:first-child{
-                    width: 70%;
-                }
-            }
-            button{
-                font-size: 1rem;
-                width: 15%;
-                padding: 0.5rem 1rem;
+    #answer-type {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 2rem;
+
+        // p {
+        //     font-size: 1rem;
+        // }
+
+        .simple-button{
+            background-color: rgba(255, 255, 255, 0);
+            color: black;
+            font-size: 0.9rem;
+            font-weight: 200;
+            border: 2px solid var(--main-grey);
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+
+            &:hover{
+                background-color: var(--darker-grey);
             }
         }
     }
+
+    // #info {
+    //     margin: 2rem 0;
+    // }
+
+    .answer {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 2rem 0;
+
+        input {
+            width: 20%;
+            margin: 0 0rem;
+
+            &:first-child {
+                width: 60%;
+            }
+        }
+
+        button {
+            width: 15%;
+            margin-left: 0.5rem;
+            background-color: var(--main-red);
+
+            &:hover{
+                background-color: var(--darker-red);
+            }
+        }
+    }
+}

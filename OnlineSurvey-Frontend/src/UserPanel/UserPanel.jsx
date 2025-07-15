@@ -58,7 +58,8 @@ export default function UserPanel() {
             <div id="panel-container">
                 <div id="panel-content">
                     <div id="options">
-                        <button onClick={()=>setCurrentSection(<AddNewSurvey></AddNewSurvey>)}>Add new survey</button>
+                        <button onClick={()=>setCurrentSection(<AddNewSurvey></AddNewSurvey>)}>New survey</button>
+                        <h3>My surveys</h3>
                         <ul>
                             {suerveysList.map((e) => (
                                 <li key={e.id} className="surveyButton">

@@ -5,20 +5,29 @@
     align-items: center;
     justify-content: center;
     #panel-content{
-        width: 70rem;
+        width: 90rem;
         min-height: 30rem;
         // background-color: white;
         padding: 1rem;
         display: flex;
+        justify-content: center;
         padding: 2rem 0;
 
         #options{
-            width: 30%;
+            width: 20%;
             height: 100%;
             display: flex;
-            align-items: center;
+            align-items: start;
             flex-direction: column;
-            // background-color: lightblue;
+
+            button{
+                margin-left: 1rem;
+            }
+
+            h3{
+                margin-top: 2rem;
+                padding-left: 1rem;
+            }
 
             ul{
                 display: flex;
@@ -35,7 +44,7 @@
                     width: 100%;
                     margin: 0.2rem 0;
                     border-radius: 20px;
-                    background-color: rgb(223, 222, 222);
+                    // background-color: rgb(223, 222, 222);
 
                     p{
                         padding: 0.5rem 1rem;
@@ -49,7 +58,7 @@
 
                     &:hover{
                         cursor: pointer;
-                        background-color: rgb(180, 179, 179);
+                        background-color: rgb(223, 222, 222);
                     }
 
                 }
@@ -58,8 +67,8 @@
         }
 
         #content{
-            width: 75%;
-            background-color: rgb(218, 218, 218);
+            width: 60%;
+            // background-color: rgb(218, 218, 218);
             padding: 1rem;
             display: flex;
             justify-content: center;

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./RenderModule.scss"
 
 export default function RenderModule({ id, questionDetails, deleteQuestion, updateQuestion, updateAnswers, deleteAnswer, toggleCorrectAnswer }) {
@@ -11,16 +12,14 @@ export default function RenderModule({ id, questionDetails, deleteQuestion, upda
         updateAnswers(id, answerId, value);
     };
 
-    const handleDeleteAnswer =(answerId)=>{
-        deleteAnswer(id , answerId);
+    const handleDeleteAnswer = (answerId) => {
+        deleteAnswer(id, answerId);
     }
 
     const handleCorrectChange = (answerId, isChecked) => {
-    toggleCorrectAnswer(id, answerId, isChecked);
-};
+        toggleCorrectAnswer(id, answerId, isChecked);
+    };
 
-
-    
 
     return (
         <div className="render-module">
@@ -28,15 +27,20 @@ export default function RenderModule({ id, questionDetails, deleteQuestion, upda
                 <button onClick={() => deleteQuestion(id)}>X</button>
             </div>
 
+            <p style={{margin:"1rem 0"}} >Question</p>
             <input
                 type="text"
-                placeholder="Your question"
+                placeholder="Enter your question"
                 onChange={handleInputChange}
                 value={questionName}
             />
 
             <div id="answer-type">
-                <div className="type">
+                <button style={type === "single" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "single")} className="simple-button">Single correct answer</button>
+                <button style={type === "multiple" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "multiple")} className="simple-button">Multiple correct answer</button>
+                <button style={type === "open" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "open")} className="simple-button">Open question</button>
+                <button style={type === "any" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "any")} className="simple-button">Witchout correct answer</button>
+                {/* <div className="type">
                     <input
                         type="radio"
                         name={`type-${id}`}
@@ -63,11 +67,20 @@ export default function RenderModule({ id, questionDetails, deleteQuestion, upda
                     />
                     <p>Open answer</p>
                 </div>
+                <div className="type">
+                    <input
+                        type="radio"
+                        name={`type-${id}`}
+                        checked={type === "any"}
+                        onChange={() => updateQuestion(id, "type", "any")}
+                    />
+                    <p>Any answer</p>
+                </div> */}
             </div>
 
-            <div id="info">
+            {/* <div id="info">
                 <p>Choose good {type === "single" ? "answer" : "answers"} in checkbox</p>
-            </div>
+            </div> */}
 
             {type !== "open" && (
                 <>
@@ -79,8 +92,9 @@ export default function RenderModule({ id, questionDetails, deleteQuestion, upda
                                 value={e.answerName}
                                 onChange={(ev) => handleAnswersChange(e.answerId, ev.target.value)}
                             />
-                            <input name={`correct-${id}`} onChange={(ev) => handleCorrectChange(e.answerId, ev.target.checked)} checked={questionDetails.correctAnswers.includes(e.answerId)} type={type === "single" ? "radio" : "checkbox"} />
-                            <button onClick={()=>handleDeleteAnswer(e.answerId)}>Delete</button>
+                            {(type === "any" ? null : <input name={`correct-${id}`} onChange={(ev) => handleCorrectChange(e.answerId, ev.target.checked)} checked={questionDetails.correctAnswers.includes(e.answerId)} type={type === "single" ? "radio" : "checkbox"} />)}
+
+                            <button onClick={() => handleDeleteAnswer(e.answerId)}>Delete</button>
                         </div>
                     ))}
                     <button onClick={() => {
@@ -89,7 +103,7 @@ export default function RenderModule({ id, questionDetails, deleteQuestion, upda
                             answerName: ""
                         };
                         updateQuestion(id, "answers", [...answers, newAnswer]);
-                    }}>Add</button>
+                    }}>Add new answer</button>
                 </>
             )}
 

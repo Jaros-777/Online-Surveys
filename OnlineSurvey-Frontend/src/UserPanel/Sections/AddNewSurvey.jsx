@@ -3,6 +3,13 @@ import "./AddNewSurvey.scss";
 import RenderModule from "./RenderModule.jsx"
 
 export default function AddNewSurvey() {
+    const[surveyDetails,setSurveyDetails] = useState(
+        {
+            title:"Pierwsza ankieta",
+            description:"To moja pierwsza ankieta",
+            randomOrder: false
+        }
+    )
     const [modulList, setModuleList] = useState([
         {
             id: Date.now(),
@@ -20,28 +27,27 @@ export default function AddNewSurvey() {
         }
     ]);
 
-    const[description, setDescription] = useState("")
 
     const deleteQuestion = (idToRemove) => {
         setModuleList(prevList => prevList.filter(q => q.id !== idToRemove));
     };
 
     const deleteAnswer = (id, answerId) => {
-    setModuleList(prevList =>
-        prevList.map(q =>
-            q.id === id
-                ? {
-                    ...q,
-                    questionDetails: {
-                        ...q.questionDetails,
-                        answers: q.questionDetails.answers.filter(ans => ans.answerId !== answerId),
-                        correctAnswers: q.questionDetails.correctAnswers.filter(ca => ca !== answerId)
+        setModuleList(prevList =>
+            prevList.map(q =>
+                q.id === id
+                    ? {
+                        ...q,
+                        questionDetails: {
+                            ...q.questionDetails,
+                            answers: q.questionDetails.answers.filter(ans => ans.answerId !== answerId),
+                            correctAnswers: q.questionDetails.correctAnswers.filter(ca => ca !== answerId)
+                        }
                     }
-                }
-                : q
-        )
-    );
-};
+                    : q
+            )
+        );
+    };
 
     const addQuestion = () => {
         setModuleList(prev => [
@@ -49,7 +55,7 @@ export default function AddNewSurvey() {
             {
                 id: Date.now(),
                 questionDetails: {
-                    questionName: "",
+                    questionName: "Pytanie no 1",
                     type: "single",
                     answerCount: 1,
                     answers: [{
@@ -99,40 +105,58 @@ export default function AddNewSurvey() {
     };
 
     const toggleCorrectAnswer = (id, answerId, isChecked) => {
-    setModuleList(prev =>
-        prev.map(q => {
-            if (q.id !== id) return q;
+        setModuleList(prev =>
+            prev.map(q => {
+                if (q.id !== id) return q;
 
-            const { type, correctAnswers } = q.questionDetails;
+                const { type, correctAnswers } = q.questionDetails;
 
-            let newCorrectAnswers;
-            if (type === "single") {
-                newCorrectAnswers = isChecked ? [answerId] : [];
-            } else {
-                if (isChecked) {
-                    newCorrectAnswers = [...correctAnswers, answerId];
+                let newCorrectAnswers;
+                if (type === "single") {
+                    newCorrectAnswers = isChecked ? [answerId] : [];
                 } else {
-                    newCorrectAnswers = correctAnswers.filter(id => id !== answerId);
+                    if (isChecked) {
+                        newCorrectAnswers = [...correctAnswers, answerId];
+                    } else {
+                        newCorrectAnswers = correctAnswers.filter(id => id !== answerId);
+                    }
                 }
-            }
 
-            return {
-                ...q,
-                questionDetails: {
-                    ...q.questionDetails,
-                    correctAnswers: newCorrectAnswers
-                }
-            };
-        })
-    );
-};
+                return {
+                    ...q,
+                    questionDetails: {
+                        ...q.questionDetails,
+                        correctAnswers: newCorrectAnswers
+                    }
+                };
+            })
+        );
+    };
+
+    const handleCreateSurvey = () => {
+        const JsonToSend = {
+            details: surveyDetails,
+            questions: modulList,
+        }
+        console.log(JsonToSend)
+    };
 
 
     return (
         <div id="new-survey-container">
-            <div id="description">
+            <h1>Create a new survey</h1>
+            <section>
+                <p>Survey Title</p>
+                <input type="text" placeholder="Enter survey title" onChange={(e)=>setSurveyDetails({ ...surveyDetails,title: e.target.value} )} value={surveyDetails.title}/>
+            </section>
+            <section>
+                <p>Survey Description</p>
+                <textarea value={surveyDetails.description} onChange={(e)=>setSurveyDetails({ ...surveyDetails,  description: e.target.value} )} placeholder="Description of your survey"></textarea>
+            </section>
+            {/* <div id="description">
                 <textarea name={description} onChange={(e)=>setDescription(e.target.value)} placeholder="Description of your survey"></textarea>
-            </div>
+            </div> */}
+            <p style={{ marginTop: "1rem", fontWeight: "bold" }} >Questions</p>
             {modulList.map((e) => (
                 <RenderModule
                     key={e.id}
@@ -142,17 +166,18 @@ export default function AddNewSurvey() {
                     updateQuestion={updateQuestion}
                     updateAnswers={updateAnswers}
                     deleteAnswer={deleteAnswer}
-                    toggleCorrectAnswer = {toggleCorrectAnswer}
+                    toggleCorrectAnswer={toggleCorrectAnswer}
                 />
             ))}
-            <button onClick={addQuestion}>Add question</button>
+            <button style={{ marginTop: "1rem" }} onClick={addQuestion}>Add question</button>
             <div id="answer-option">
+                <p style={{ fontWeight: "bold" }}>Configuration</p>
                 <div className="option">
-                    <input type="checkbox" />
+                    <input type="checkbox" value={surveyDetails.randomOrder} onChange={(e)=>setSurveyDetails({ ...surveyDetails,  randomOrder: e.target.checked} )} />
                     <p>Random order</p>
                 </div>
             </div>
-            <button>Add survey</button>
+            <button onClick={handleCreateSurvey}>Create survey</button>
         </div>
     );
 }
