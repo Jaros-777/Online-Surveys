@@ -1,0 +1,14 @@
+
+#survey-container{
+    // background-color: rgb(235, 235, 235);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    #top{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+}

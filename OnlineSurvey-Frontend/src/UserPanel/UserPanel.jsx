@@ -3,7 +3,9 @@ import { Navigate, useNavigate } from "react-router-dom"
 import './UserPanel.scss'
 import { UserMail } from "../App";
 import FrontPage from "./Sections/FrontPage";
-import AddNewSurvey from "./Sections/AddNewSurvey";
+import AddNewSurvey from "./NewSurvey/AddNewSurvey";
+import SurveyDetails from "./SurveyDetails/SurveyDetails";
+import axios from "axios";
 
 export default function UserPanel() {
 
@@ -13,7 +15,7 @@ export default function UserPanel() {
         [
             {
                 id: 0,
-                name: "Survey 1",
+                name: "Moje ulubione jedzenie",
                 asnwersCount: 2
             },
             {
@@ -42,10 +44,17 @@ export default function UserPanel() {
         }
     }
 
+    const fetchSurveys =async()=>{
+        //fetch id, name and answers count
+        
+
+    }
+
 
 
     // useEffect(()=>{
     //     checkLogged();
+    //     fetchSurveys();
     // },[])
 
     if (!isLogged) {
@@ -58,11 +67,11 @@ export default function UserPanel() {
             <div id="panel-container">
                 <div id="panel-content">
                     <div id="options">
-                        <button onClick={()=>setCurrentSection(<AddNewSurvey></AddNewSurvey>)}>New survey</button>
+                        <button onClick={()=>setCurrentSection(<AddNewSurvey funct={"new"}></AddNewSurvey>)}>New survey</button>
                         <h3>My surveys</h3>
                         <ul>
                             {suerveysList.map((e) => (
-                                <li key={e.id} className="surveyButton">
+                                <li onClick={()=>setCurrentSection(<SurveyDetails setCurrentSection={setCurrentSection} id={e.id}></SurveyDetails>)} key={e.id} className="surveyButton">
                                     <p>{e.name}</p>
                                     <p>{e.asnwersCount} received</p>
                                 </li>

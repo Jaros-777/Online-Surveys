@@ -1,28 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./AddNewSurvey.scss";
 import RenderModule from "./RenderModule.jsx"
 
-export default function AddNewSurvey() {
+export default function AddNewSurvey({funct}) {
     const[surveyDetails,setSurveyDetails] = useState(
         {
-            title:"Pierwsza ankieta",
+            title:"Moje ulubione jedzenie",
             description:"To moja pierwsza ankieta",
             randomOrder: false
         }
     )
     const [modulList, setModuleList] = useState([
         {
-            id: Date.now(),
+            id: 0,
             questionDetails: {
-                questionName: "",
+                questionName: "Najlepszy fast-food",
                 type: "single",
                 answers: [
                     {
-                        answerId: Date.now(),
-                        answerName: "Pierwsza odpowiedz"
-                    }
+                        answerId: 0,
+                        answerName: "Pizza"
+                    },
+                    {
+                        answerId: 1,
+                        answerName: "Kebab"
+                    },
+                    {
+                        answerId: 2,
+                        answerName: "Hamburger"
+                    },
+                    {
+                        answerId: 3,
+                        answerName: "Hot-dog"
+                    },
                 ],
-                correctAnswers: []
+                correctAnswers: [1]
             }
         }
     ]);
@@ -133,13 +145,30 @@ export default function AddNewSurvey() {
         );
     };
 
-    const handleCreateSurvey = () => {
+    const handleCreateSurvey = async() => {
         const JsonToSend = {
             details: surveyDetails,
             questions: modulList,
         }
         console.log(JsonToSend)
     };
+    const handleUpdateSurvey = async() => {
+        const JsonToSend = {
+            details: surveyDetails,
+            questions: modulList,
+        }
+        console.log(JsonToSend)
+    };
+
+    const fetchSurvey = async()=>{
+        // only while changing current survey
+    }
+
+    useEffect(()=>{
+        if(funct == "change"){
+            fetchSurvey();
+        }
+    },[])
 
 
     return (
@@ -177,7 +206,7 @@ export default function AddNewSurvey() {
                     <p>Random order</p>
                 </div>
             </div>
-            <button onClick={handleCreateSurvey}>Create survey</button>
+            <button onClick={funct == "new" ? handleCreateSurvey : handleUpdateSurvey}>Create survey</button>
         </div>
     );
 }

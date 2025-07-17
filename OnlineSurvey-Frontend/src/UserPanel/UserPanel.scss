@@ -7,11 +7,12 @@
     #panel-content{
         width: 90rem;
         min-height: 30rem;
-        // background-color: white;
+        background-color: white;
         padding: 1rem;
         display: flex;
         justify-content: center;
         padding: 2rem 0;
+        border-radius: 20px;
 
         #options{
             width: 20%;
@@ -67,7 +68,7 @@
         }
 
         #content{
-            width: 60%;
+            width: 70%;
             // background-color: rgb(218, 218, 218);
             padding: 1rem;
             display: flex;
