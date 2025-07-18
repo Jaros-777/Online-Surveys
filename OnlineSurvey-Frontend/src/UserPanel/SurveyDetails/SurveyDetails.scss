@@ -10,5 +10,31 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+
+    #link-to-survey{
+        border: 2px solid var(--main-grey);
+        padding: 0.5rem 2rem;
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        position: relative;
+
+        #info-container{
+            position: absolute;
+            top: -1rem;
+            right: 4.5rem;
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 2px solid var(--main-grey);
+            border-radius: 20px;
+        }
+    }
+
+    #survey-desc{
+        margin: 2rem 0;
     }
 }

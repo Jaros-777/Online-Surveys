@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MainPage from './MainPage.jsx'
 import UserPanel from './UserPanel/UserPanel.jsx'
 import NavBar from './NavBar/NavBar.jsx'
+import Survey from './Survey/Survey.jsx'
 import {createContext, useState } from 'react'
 
 export const UserMail = createContext();
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path='/'  element={<MainPage />}></Route>
         <Route path='/panel'  element={<UserPanel />}></Route>
+        <Route path='/survey/:id'  element={<Survey />}></Route>
       </Routes>
       </div>
     </BrowserRouter>

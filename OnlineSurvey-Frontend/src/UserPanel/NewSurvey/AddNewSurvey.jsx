@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import "./AddNewSurvey.scss";
 import RenderModule from "./RenderModule.jsx"
 
-export default function AddNewSurvey({funct}) {
+export default function AddNewSurvey({funct, surveyId}) {
     const[surveyDetails,setSurveyDetails] = useState(
         {
+            id: 0,
             title:"Moje ulubione jedzenie",
             description:"To moja pierwsza ankieta",
-            randomOrder: false
+            randomOrder: false,
+            link:"http://localhost:5173/panel/1535345363262134626346"
         }
     )
     const [modulList, setModuleList] = useState([
@@ -168,6 +170,7 @@ export default function AddNewSurvey({funct}) {
         if(funct == "change"){
             fetchSurvey();
         }
+        // console.log(funct, surveyId)
     },[])
 
 

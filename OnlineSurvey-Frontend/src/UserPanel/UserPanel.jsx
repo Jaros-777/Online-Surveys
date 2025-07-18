@@ -25,7 +25,7 @@ export default function UserPanel() {
             }
         ]
     )
-    const [currentSection, setCurrentSection] = useState(<AddNewSurvey></AddNewSurvey>)
+    const [currentSection, setCurrentSection] = useState(<FrontPage></FrontPage>)
 
 
     const checkLogged = () => {
@@ -71,7 +71,7 @@ export default function UserPanel() {
                         <h3>My surveys</h3>
                         <ul>
                             {suerveysList.map((e) => (
-                                <li onClick={()=>setCurrentSection(<SurveyDetails setCurrentSection={setCurrentSection} id={e.id}></SurveyDetails>)} key={e.id} className="surveyButton">
+                                <li onClick={()=>setCurrentSection(<SurveyDetails setCurrentSection={setCurrentSection} surveyId={e.id}></SurveyDetails>)} key={e.id} className="surveyButton">
                                     <p>{e.name}</p>
                                     <p>{e.asnwersCount} received</p>
                                 </li>

@@ -1,7 +1,7 @@
 import "./MainPage.scss"
 import { Navigate, useNavigate } from "react-router-dom"
 import SurveyImg from "./assets/survey.jpg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Auth from "./Auth";
 
 export default function MainPage() {
@@ -25,6 +25,18 @@ export default function MainPage() {
 
 
     }
+
+    const checkLogged = () => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            nav("/panel")
+        }
+    }
+    
+    useEffect(()=>{
+        checkLogged();
+    },[])
 
     return (
         <>

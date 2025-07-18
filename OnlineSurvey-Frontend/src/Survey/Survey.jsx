@@ -1,13 +1,11 @@
-import "./SurveyDetails.scss"
-import Details from "./Details"
-import { useState } from "react"
-import AddNewSurvey from "../NewSurvey/AddNewSurvey"
+import { useParams } from "react-router-dom"
+import "./Survey.scss"
+import { useState } from "react";
+import Question from "./Question";
 
+export default function Survey() {
 
-export default function SurveyDetails({ surveyId, setCurrentSection }) {
-
-    const [loaded, setLoaded] = useState(true)
-    const [infoContainerVisibility, setInfoContainerVisibility] = useState(false)
+    const id = useParams();
 
     const [surveyDetails, setSurveyDetails] = useState({
         details: {
@@ -55,7 +53,7 @@ export default function SurveyDetails({ surveyId, setCurrentSection }) {
             totalAnswerCount: 4,
             questionDetails: {
                 questionName: "Ulubione miasto",
-                type: "single",
+                type: "open",
                 answers: [
                     {
                         answerId: 0,
@@ -85,57 +83,30 @@ export default function SurveyDetails({ surveyId, setCurrentSection }) {
     }
     )
 
-    const fetchSurveyDetails = async () => {
-        // fetch all of te survey
-        setLoaded(false)
-        surveyId
-    }
-
-    const copyToClickBoardFunc = () => {
-        navigator.clipboard.writeText(surveyDetails.details.link)
-        setInfoContainerVisibility(true)
-        setTimeout(() => {
-            setInfoContainerVisibility(false)
-        }, 1000);
-
-    }
-
-    const loadingPage = () => {
-
-        return <p>Loading...</p>
+    const fetchSurvey = async () => {
+        // fetch public survey
+        id
     }
 
     return (
-        loaded ?
-            <div id="survey-container">
-                <div id="top">
-                    <h1>{surveyDetails.details.title}</h1>
-                    <button onClick={() => setCurrentSection(<AddNewSurvey funct={"change"} surveyId={surveyDetails.details.id} ></AddNewSurvey>)} >Edit</button>
+        <div id="survey-container">
+            <div id="survey-content">
+                <div id="description">
+                    <h1>Title</h1>
+                    <h3>Description</h3>
                 </div>
-                <div id="link-to-survey">
-                    <div id="link-text">
-                        <small>Link to survey</small>
-                        <p>{surveyDetails.details.link}</p>
-                    </div>
-                    <button onClick={copyToClickBoardFunc}>Copy to clickboard</button>
-                    {infoContainerVisibility ?
-                        <div id="info-container">
-                            <p>Copied</p>
-                        </div>
-                        : null}
+                <ul>
+                    {surveyDetails.questions.map((e) => (
+                        <li key={e.id}>
+                            <Question question={e} setSurveyDetails={setSurveyDetails}></Question>
+                        </li>
 
-                </div>
-                <div id="survey-desc">
-                    <p>{surveyDetails.details.description}</p>
-                </div>
-                <h3>Results:</h3>
-                {surveyDetails.questions.map((e) => (
-                    <Details key={e.id} surveyDetails={e}></Details>
-                ))}
+                    ))}
+                </ul>
+
+                <button>Send answers</button>
             </div>
 
-            : loadingPage()
-
-
+        </div>
     )
 }
