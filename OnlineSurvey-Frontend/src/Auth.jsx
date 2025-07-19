@@ -1,5 +1,5 @@
 // LoginRegisterPanel.jsx
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Auth.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,7 @@ const Auth = (props) => {
             });
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("email", res.data.email)
+            localStorage.setItem("id", res.data.userId)
             navigate("/panel")
         } catch (err) {
             alert(err.response?.data || "Błąd logowania/rejestracji");
@@ -40,7 +41,7 @@ const Auth = (props) => {
                 <h2>{isRegistering ? "Registration" : "Login"}</h2>
                 <form onSubmit={handleSubmit}>
                     <input
-                        type="email"
+                        // type="email"
                         name="email"
                         placeholder="Email"
                         value={form.email}

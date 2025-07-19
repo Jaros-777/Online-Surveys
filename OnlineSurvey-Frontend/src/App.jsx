@@ -6,15 +6,20 @@ import NavBar from './NavBar/NavBar.jsx'
 import Survey from './Survey/Survey.jsx'
 import {createContext, useState } from 'react'
 
-export const UserMail = createContext();
+export const User = createContext();
 
 function App() {
 
-  const[userMail, setUserMail] = useState("email@email.com")
+  const[user, setUser] = useState(
+    {
+      id:0,
+      email:"",
+      token: null
+    })
 
   return (
     <>
-    <UserMail.Provider value={[userMail,setUserMail]}>
+    <User.Provider value={[user,setUser]}>
     <BrowserRouter>
       <NavBar></NavBar>
       <div>
@@ -25,7 +30,7 @@ function App() {
       </Routes>
       </div>
     </BrowserRouter>
-    </UserMail.Provider>
+    </User.Provider>
       
     </>
   )

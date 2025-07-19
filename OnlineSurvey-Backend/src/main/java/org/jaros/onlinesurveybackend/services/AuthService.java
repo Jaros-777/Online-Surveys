@@ -44,13 +44,16 @@ public class AuthService implements UserDetailsService {
 
             if (passwordEncoder.matches(login.getPassword(), userDetails.getPassword())) {
 
+                User user = userRepository.findByEmail(login.getEmail())
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
                 String token = jwtUtil.generateToken(login.getEmail());
                 System.out.println("Użytkownik zalogowany: " + login.getEmail());
 
 
 
                 return ResponseEntity.ok()
-                        .body(Map.of("token", token, "email", login.getEmail()));
+                        .body(Map.of("token", token, "email", login.getEmail(), "userId", user.getId()));
 
             } else {
                 System.out.println("Niepoprawne hasło dla: " + login.getEmail());

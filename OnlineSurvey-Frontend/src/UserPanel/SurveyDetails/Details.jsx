@@ -1,7 +1,7 @@
 import "./Details.scss"
 
 
-export default function Details({ surveyDetails }) {
+export default function Details({ question }) {
 
     // {
     //         id: 0,
@@ -40,8 +40,8 @@ export default function Details({ surveyDetails }) {
     return (
         <>
             <div className="details-content">
-                <h3><span>1.</span> {surveyDetails.questionDetails.questionName}</h3>
-                <p>{surveyDetails.totalAnswerCount} out {surveyDetails.visitorsCount} people answered this question</p>
+                <h3><span>1.</span> {question.name}</h3>
+                {/* <p>{surveyDetails.totalAnswerCount} out {surveyDetails.visitorsCount} people answered this question</p> */}
 
                 <ul>
                     {surveyDetails.questionDetails.answers.map((e) => (

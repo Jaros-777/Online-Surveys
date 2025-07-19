@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import "./Survey.scss"
 import { useState } from "react";
 
-export default function Question({ setSurveyDetails, question }) {
+export default function Question({ chooseAnswer, question }) {
 
 
     // {
@@ -15,19 +15,24 @@ export default function Question({ setSurveyDetails, question }) {
     //             answers: [
     //                 {
     //                     answerId: 0,
-    //                     answerName: "Pizza"
+    //                     answerName: "Pizza",
+    //                    choosenCount: 0,
+    
     //                 },
     //                 {
     //                     answerId: 1,
-    //                     answerName: "Kebab"
+    //                     answerName: "Kebab",
+    //                    // choosenCount: 0,
     //                 },
     //                 {
     //                     answerId: 2,
-    //                     answerName: "Hamburger"
+    //                     answerName: "Hamburger",
+    //                    choosenCount: 0,
     //                 },
     //                 {
     //                     answerId: 3,
-    //                     answerName: "Hot-dog"
+    //                     answerName: "Hot-dog",
+    //                    choosenCount: 0,
     //                 },
     //             ],
     //             correctAnswers: [1]
@@ -39,8 +44,8 @@ export default function Question({ setSurveyDetails, question }) {
         id
     }
 
-    const handleChooseAnswer = (answerId) => {
-        setSurveyDetails();
+    const handleChooseAnswer = (answerId, value) => {
+        chooseAnswer(answerId, value);
     }
 
     return (
@@ -52,7 +57,7 @@ export default function Question({ setSurveyDetails, question }) {
                     <ul>
                         {question.questionDetails.answers.map((e) => (
                             <li key={e.answerId}>
-                                <button onClick={() => handleChooseAnswer(e.id)} id="answer">
+                                <button onClick={() => handleChooseAnswer(e.id, null)} id="answer">
                                     {e.answerName}
                                 </button>
                             </li>

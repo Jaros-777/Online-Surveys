@@ -20,18 +20,22 @@ export default function AddNewSurvey({funct, surveyId}) {
                 type: "single",
                 answers: [
                     {
+                        questionId:0,
                         answerId: 0,
                         answerName: "Pizza"
                     },
                     {
+                        questionId:0,
                         answerId: 1,
                         answerName: "Kebab"
                     },
                     {
+                        questionId:0,
                         answerId: 2,
                         answerName: "Hamburger"
                     },
                     {
+                        questionId:0,
                         answerId: 3,
                         answerName: "Hot-dog"
                     },

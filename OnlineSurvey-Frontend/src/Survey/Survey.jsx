@@ -13,12 +13,10 @@ export default function Survey() {
             title: "Moje ulubione jedzenie",
             description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit ab corrupti molestias, adipisci magnam id perspiciatis quis beatae doloribus vitae iure non ea, sint autem repellat dolor obcaecati, praesentium reiciendis?",
             randomOrder: false,
-            link: "http://localhost:5173/panel/1535345363262134626346"
         },
         questions: [{
             id: 0,
-            visitorsCount: 2,
-            totalAnswerCount: 2,
+            totalAnswerCount: 0,
             questionDetails: {
                 questionName: "Najlepszy fast-food",
                 type: "single",
@@ -27,6 +25,7 @@ export default function Survey() {
                         answerId: 0,
                         answerName: "Pizza",
                         choosenCount: 0,
+                        currentChoosen: false
                     },
                     {
                         answerId: 1,
@@ -88,23 +87,31 @@ export default function Survey() {
         id
     }
 
+    const sendAnswers=async()=>{
+
+    }
+
+    const chooseAnswer = (answerId, value) => {
+        setSurveyDetails();
+    }
+
     return (
         <div id="survey-container">
             <div id="survey-content">
                 <div id="description">
-                    <h1>Title</h1>
-                    <h3>Description</h3>
+                    <h1>{surveyDetails.details.title}</h1>
+                    <h3>{surveyDetails.details.description}</h3>
                 </div>
                 <ul>
                     {surveyDetails.questions.map((e) => (
                         <li key={e.id}>
-                            <Question question={e} setSurveyDetails={setSurveyDetails}></Question>
+                            <Question question={e} chooseAnswer={chooseAnswer}></Question>
                         </li>
 
                     ))}
                 </ul>
 
-                <button>Send answers</button>
+                <button onClick={sendAnswers}>Send answers</button>
             </div>
 
         </div>
