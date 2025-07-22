@@ -9,8 +9,9 @@
         span{
             background-color: var(--main-blue);
             color: white;
-            padding: 0.5rem;
+            padding: 0.5rem 0.7rem;
             border-radius: 12px;
+            margin-right: 0.5rem;
         }
     }
 
@@ -63,6 +64,12 @@
                 }
 
             }
+        }
+
+        .openQuestion{
+            border: 2px solid var(--main-grey);
+            border-radius: 12px;
+            padding: 1rem;
         }
     }
 

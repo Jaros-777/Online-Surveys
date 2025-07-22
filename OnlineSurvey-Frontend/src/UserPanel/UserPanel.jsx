@@ -9,6 +9,7 @@ import axios from "axios";
 
 export default function UserPanel() {
 
+    const nav = useNavigate();
     const [isLogged, setIsLogged] = useState(true)
     const [user, setUser] = useContext(User)
     const [surveyList, setSurveyList] = useState([])
@@ -30,6 +31,7 @@ export default function UserPanel() {
             // console.log("Nie jesteś zalogowany");
             setIsLogged(false)
             setUser({ email: null, token: null, id: null });
+            
         }
     }
 
@@ -48,13 +50,18 @@ export default function UserPanel() {
 
         } catch (error) {
             console.log(error)
+            LogOut();
         }
 
-
-
+    }
+    const LogOut=()=>{
+        localStorage.removeItem("email")
+        localStorage.removeItem("token")
+        localStorage.clear();
+        nav("/")
     }
 
-
+    
 
     useEffect(() => {
         checkLogged();
@@ -66,14 +73,12 @@ export default function UserPanel() {
     }, [user.token])
 
     if (!isLogged) {
-        return <p>You are not logged</p>
+        return <p style={{textAlign:"center", marginTop:"10rem", fontSize:"4rem"}}>You are not logged in</p>
     }
 
     return (
         <>
-            {surveyList.length == 0 ?
-                <p>Loading..</p>
-                :
+            
                 <div id="panel-container">
                     <div id="panel-content">
                         <div id="options">
@@ -82,7 +87,7 @@ export default function UserPanel() {
                             <ul>
                                 {surveyList.length == 0 ? <p>You don't have any surveys yet </p> :
                                     surveyList.map((e) => (
-                                        <li onClick={() => setCurrentSection(<SurveyDetails setCurrentSection={setCurrentSection} surveyList={e}></SurveyDetails>)} key={e.id} className="surveyButton">
+                                        <li onClick={()=>setCurrentSection(<SurveyDetails key={e.id} setCurrentSection={setCurrentSection} surveyList={e}></SurveyDetails>)} key={e.id} className="surveyButton">
                                             <p>{e.title}</p>
                                             <p>{e.totalAttempts} received</p>
                                         </li>
@@ -95,7 +100,7 @@ export default function UserPanel() {
                         </div>
                     </div>
                 </div>
-            }
+            
 
         </>
     )

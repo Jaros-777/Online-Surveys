@@ -88,14 +88,9 @@ export default function SurveyDetails({ surveyList, setCurrentSection }) {
     // }
     // )
 
-    const fetchSurveyDetails = async () => {
-        // fetch all of te survey
-        setLoaded(false)
-        surveyId
-    }
 
     const copyToClickBoardFunc = () => {
-        navigator.clipboard.writeText(surveyDetails.details.link)
+        navigator.clipboard.writeText(window.location.origin +"/survey/"+ surveyDetails.id)
         setInfoContainerVisibility(true)
         setTimeout(() => {
             setInfoContainerVisibility(false)
@@ -118,7 +113,7 @@ export default function SurveyDetails({ surveyList, setCurrentSection }) {
                 <div id="link-to-survey">
                     <div id="link-text">
                         <small>Link to survey</small>
-                        <p>{surveyDetails.id}</p>
+                        <p>{window.location.origin +"/survey/"+ surveyDetails.id}</p>
                     </div>
                     <button onClick={copyToClickBoardFunc}>Copy to clickboard</button>
                     {infoContainerVisibility ?
@@ -132,8 +127,8 @@ export default function SurveyDetails({ surveyList, setCurrentSection }) {
                     <p>{surveyDetails.description}</p>
                 </div>
                 <h3>Results:</h3>
-                {surveyDetails.questions.map((e) => (
-                    <Details key={e.id} question={e}></Details>
+                {surveyDetails.questions.map((e, index) => (
+                    <Details key={e.id} index={index+1} totalAttempts={surveyList.totalAttempts} question={e}></Details>
                 ))}
             </div>
 

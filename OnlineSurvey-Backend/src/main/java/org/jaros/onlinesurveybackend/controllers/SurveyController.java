@@ -17,19 +17,14 @@ public class SurveyController {
     }
 
     @PostMapping("/general")
-    public ResponseEntity<?> getGeneral(@RequestBody SurveyRequest surveyRequest) {
-        // lista wszysktihc ankiet - id, nazwa, ilosc odpowiedzi
-//        System.out.println("Controller - Id uzytkownika: " + surveyRequest.getId());
-        return surveyService.getGeneralInfo(surveyRequest.getId());
+    public ResponseEntity<?> getSurveyDetails(@RequestBody SurveyRequest surveyRequest) {
+        return surveyService.getSurveyDetails(surveyRequest.getId());
     }
 
-
-    @GetMapping("/details")
-    public ResponseEntity<?> getDetails(int id) {
-        // wszytsko - podglad wszystkich pytan + analityka
-        return surveyService.getDetailsInfo(id);
+    @PostMapping("/for-user")
+    public ResponseEntity<?> getSurvey(@RequestBody SurveyRequest surveyRequest) {
+        return surveyService.getSurvey(surveyRequest.getId());
     }
-
 
     @PostMapping("/new")
     public ResponseEntity<?> addSurvey(JSONPObject newSurvey) {

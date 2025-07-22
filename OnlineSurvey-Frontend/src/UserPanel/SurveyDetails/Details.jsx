@@ -1,7 +1,8 @@
+import { useLocation, useParams } from "react-router-dom"
 import "./Details.scss"
 
 
-export default function Details({ question }) {
+export default function Details({ index, question, totalAttempts }) {
 
     // {
     //         id: 0,
@@ -36,27 +37,40 @@ export default function Details({ question }) {
     //         }
     //     }
 
+    let answeredCount = 0;
+    for (let i in question.answers) {
+        answeredCount = answeredCount + question.answers[i].chosenCount;
+    }
 
+    // console.log(answeredCount)
     return (
         <>
             <div className="details-content">
-                <h3><span>1.</span> {question.name}</h3>
-                {/* <p>{surveyDetails.totalAnswerCount} out {surveyDetails.visitorsCount} people answered this question</p> */}
+                <h3><span>{index}</span> {question.name}</h3>
+                <p>{answeredCount} out {totalAttempts} people answered this question</p>
 
                 <ul>
-                    {surveyDetails.questionDetails.answers.map((e) => (
-                        <li key={e.answerId}>
-                            <div className="text-content">
-                                <p>{e.answerName}</p>
-                                <p>{e.choosenCount} resp.</p>
-                                <p>{100 / surveyDetails.totalAnswerCount * e.choosenCount} %</p>
-                            </div>
-                            <div className="graphic-content">
-                                <div className="empty">
-                                    <div style={{width:`${100 / surveyDetails.totalAnswerCount * e.choosenCount}%`}} className="full"></div>
-                                </div>
+                    {question.answers.map((e) => (
+                        <li key={e.id}>
 
-                            </div>
+                            {question.type !== "open" ?
+                                <>
+                                    <div className="text-content">
+                                        <p>{e.answerName}</p>
+                                        <p>{e.chosenCount} resp.</p>
+                                        <p>{answeredCount > 0 ? Math.round(100 / answeredCount * e.chosenCount) : 0} %</p>
+                                    </div>
+                                    <div className="graphic-content">
+                                        <div className="empty">
+                                            <div style={{ width: `${answeredCount > 0 ? Math.round(100 / answeredCount * e.chosenCount) : 0}%` }} className="full"></div>
+                                        </div>
+
+                                    </div>
+                                </> :
+                                <div className="openQuestion">
+                                    <p>{e.answerName}</p>
+                                </div>
+                            }
                         </li>
                     ))}
                 </ul>

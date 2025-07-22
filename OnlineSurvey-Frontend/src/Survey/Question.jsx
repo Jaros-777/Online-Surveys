@@ -48,15 +48,17 @@ export default function Question({ chooseAnswer, question }) {
         chooseAnswer(answerId, value);
     }
 
+    console.log(question)
+
     return (
         <div id="question-container">
-                <h1>{question.questionDetails.questionName}</h1>
-                {question.questionDetails.type === "open" ?
+                <h1>{question.name}</h1>
+                {question.type == "open" ?
                     <textarea name="" id=""></textarea>
                     :
                     <ul>
-                        {question.questionDetails.answers.map((e) => (
-                            <li key={e.answerId}>
+                        {question.answers.map((e) => (
+                            <li key={e.id}>
                                 <button onClick={() => handleChooseAnswer(e.id, null)} id="answer">
                                     {e.answerName}
                                 </button>

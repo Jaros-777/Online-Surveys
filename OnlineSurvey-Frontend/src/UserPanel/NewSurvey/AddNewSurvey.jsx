@@ -6,41 +6,25 @@ export default function AddNewSurvey({funct, surveyId}) {
     const[surveyDetails,setSurveyDetails] = useState(
         {
             id: 0,
-            title:"Moje ulubione jedzenie",
-            description:"To moja pierwsza ankieta",
-            randomOrder: false,
-            link:"http://localhost:5173/panel/1535345363262134626346"
+            title:"",
+            description:"",
+            randomOrder: false
         }
     )
     const [modulList, setModuleList] = useState([
         {
             id: 0,
             questionDetails: {
-                questionName: "Najlepszy fast-food",
+                questionName: "",
                 type: "single",
                 answers: [
                     {
                         questionId:0,
                         answerId: 0,
-                        answerName: "Pizza"
-                    },
-                    {
-                        questionId:0,
-                        answerId: 1,
-                        answerName: "Kebab"
-                    },
-                    {
-                        questionId:0,
-                        answerId: 2,
-                        answerName: "Hamburger"
-                    },
-                    {
-                        questionId:0,
-                        answerId: 3,
-                        answerName: "Hot-dog"
+                        answerName: ""
                     },
                 ],
-                correctAnswers: [1]
+                correctAnswers: []
             }
         }
     ]);
@@ -73,7 +57,7 @@ export default function AddNewSurvey({funct, surveyId}) {
             {
                 id: Date.now(),
                 questionDetails: {
-                    questionName: "Pytanie no 1",
+                    questionName: "",
                     type: "single",
                     answerCount: 1,
                     answers: [{

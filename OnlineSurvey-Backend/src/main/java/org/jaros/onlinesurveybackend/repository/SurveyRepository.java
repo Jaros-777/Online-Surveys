@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface SurveyRepository extends JpaRepository<Survey, Integer> {
     List<Survey> findByUserId(int userId);
+    List<Survey> findById(int id);
 }

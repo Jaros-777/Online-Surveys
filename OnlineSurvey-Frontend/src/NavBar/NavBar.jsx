@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import "./NavBar.scss"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import {User} from "../App.jsx"
 
 
@@ -13,7 +13,7 @@ export default function NavBar(){
     
     const url = useLocation().pathname;
     useEffect(()=>{
-        setMailVisibility(url === "/panel");
+        setMailVisibility(url === ("/panel" || url.slice(1,7)));
     },[url])
 
     const LogOut=()=>{
@@ -26,10 +26,11 @@ export default function NavBar(){
     return(
         <>
             <nav>
-                <h1>Online Surveys</h1>
+                <h1 style={{cursor:"pointer"}} onClick={()=>{nav("/")}}>Online Surveys</h1>
                 {mailVisibility ? <h3>{user.email}</h3> : null}
+                {url.slice(1,7) == "survey" ? null : 
                 <button onClick={LogOut}>Logout</button>
-                
+                }
             </nav>
         </>
     )

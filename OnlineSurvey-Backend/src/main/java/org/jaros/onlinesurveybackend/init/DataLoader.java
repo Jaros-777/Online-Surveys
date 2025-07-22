@@ -35,29 +35,44 @@ public class DataLoader implements CommandLineRunner {
         User user = new User("qweqwe", encodedPassword);
         user = userRepository.save(user);
 
-        // 2. Utwórz odpowiedzi (ID nadawane ręcznie)
-        Answer answer1 = new Answer(0, null, "Pies", 0);
-        Answer answer2 = new Answer(1, null, "Kot", 0);
-        Answer answer3 = new Answer(2, null, "Rybka", 0);
-        Answer answer4 = new Answer(3, null, "Mysz", 0);
+
+        Answer answer1 = new Answer(0, null, "Dog", 3);
+        Answer answer2 = new Answer(1, null, "Cat", 2);
+        Answer answer3 = new Answer(2, null, "Fish", 1);
+        Answer answer4 = new Answer(3, null, "Mouse", 0);
         List<Answer> answers = List.of(answer1, answer2, answer3, answer4);
-
-        // 3. Utwórz pytanie (ID ręczny), przypisz odpowiedzi
-        Question question = new Question( 0,null, "Ulubione zwierzę", "single", answers, List.of(0));
-
-        // 4. Ustaw relację answer → question
+        Question question = new Question( 0,null, "Favourite animal", "single", answers, List.of(0));
+        Answer answer9 = new Answer(9, null, "Park", 3);
+        Answer answer10 = new Answer(10, null, "In home", 2);
+        Answer answer11 = new Answer(11, null, "In forest", 1);
+        Answer answer12 = new Answer(12, null, "On the beach", 0);
+        List<Answer> answers3 = List.of(answer9, answer10, answer11, answer12);
+        Question question3 = new Question( 3,null, "The best place for playing with animal", "single", answers3, List.of(0));
         answers.forEach(a -> a.setQuestion(question));
+        answers3.forEach(a -> a.setQuestion(question3));
 
-        // 5. Utwórz ankietę, przypisz pytanie
-        Survey survey = new Survey(user.getId(), "Zwierzęta w domu", "Porozmawiajmy o zwierzętach domowych", 0, false, List.of(question));
-
-        // 6. Ustaw relację question → survey
+        Survey survey = new Survey(user.getId(), "Home animals", "Let's talk about animals", 7, false, List.of(question,question3));
         question.setSurvey(survey);
-
-        // 7. Zapisz całość (dzieki cascade = ALL zapisze się wszystko)
+        question3.setSurvey(survey);
         surveyRepository.save(survey);
-//        System.out.println("Saved survey with userId = " + survey.getUserId());
-//        System.out.println(survey.toString());
+
+        Answer answer5 = new Answer(4, null, "Paris", 2);
+        Answer answer6 = new Answer(5, null, "Barcelona", 1);
+        Answer answer7 = new Answer(6, null, "London", 1);
+        Answer answer8 = new Answer(7, null, "Los Angeles", 3);
+        List<Answer> answers2 = List.of(answer5, answer6, answer7, answer8);
+        Question question2 = new Question( 1,null, "Favourite town", "single", answers2, List.of(0));
+
+        Answer answer13 = new Answer(13, null, "My favourite town is Torun", 1);
+        List<Answer> answers4 = List.of(answer13);
+        Question question4 = new Question( 4,null, "Your favourite town", "open", answers4, List.of(0));
+        answers2.forEach(a -> a.setQuestion(question2));
+        answers4.forEach(a -> a.setQuestion(question4));
+
+        Survey survey2 = new Survey(user.getId(), "Favourite town", "Let's talk about towns", 7, false, List.of(question2, question4));
+        question2.setSurvey(survey2);
+        question4.setSurvey(survey2);
+        surveyRepository.save(survey2);
 
     }
 }
