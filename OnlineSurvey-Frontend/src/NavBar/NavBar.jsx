@@ -28,9 +28,10 @@ export default function NavBar(){
             <nav>
                 <h1 style={{cursor:"pointer"}} onClick={()=>{nav("/")}}>Online Surveys</h1>
                 {mailVisibility ? <h3>{user.email}</h3> : null}
-                {url.slice(1,7) == "survey" ? null : 
+                {mailVisibility ? <button onClick={LogOut}>Logout</button> : null}
+                {/* {url.slice(1,7) == "survey" ? null : 
                 <button onClick={LogOut}>Logout</button>
-                }
+                } */}
             </nav>
         </>
     )

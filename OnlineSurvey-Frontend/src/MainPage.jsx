@@ -54,11 +54,11 @@ export default function MainPage() {
                         </div>
                         <ul>
                             <li>100+ ready-made survey templates</li>
-                            <li>100+ ready-made survey templates</li>
-                            <li>100+ ready-made survey templates</li>
-                            <li>100+ ready-made survey templates</li>
-                            <li>100+ ready-made survey templates</li>
-                            <li>100+ ready-made survey templates</li>
+                            <li>Real-time analytics and tools</li>
+                            <li>Seamless integrations with CRM, email</li>
+                            <li>Multilingual support for global reach</li>
+                            <li>Secure data storage with SSL encryption and GDPR compliance</li>
+                            <li>Mobile-optimized surveys for any device</li>
                         </ul>
                         <div id="start-container">
                             <input type="text" value={mail} onChange={(e) => { setMail(e.target.value) }} placeholder="Twój email" />
