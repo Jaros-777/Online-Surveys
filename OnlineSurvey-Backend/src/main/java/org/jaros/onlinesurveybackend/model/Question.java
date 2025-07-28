@@ -29,14 +29,17 @@ public class Question {
     private List<Answer> answers;
     @ElementCollection
     private List<Integer> correctAnswer;
+    @ElementCollection
+    private List<Integer> chosenAnswers;
 
-    public Question(int id,Survey survey, String name, String type, List<Answer> answers, List<Integer> correctAnswer) {
+    public Question(int id,Survey survey, String name, String type, List<Answer> answers, List<Integer> correctAnswer, List<Integer> chosenAnswers) {
         this.id = id;
         this.survey = survey;
         this.name = name;
         this.type = type;
         this.answers = answers;
         this.correctAnswer = correctAnswer;
+        this.chosenAnswers = chosenAnswers;
     }
 
 }

@@ -1,9 +1,10 @@
-import { useParams } from "react-router-dom"
 import "./Survey.scss"
-import { useState } from "react";
+import "./Question.scss"
+import { useState } from "react"
 
 export default function Question({ chooseAnswer, question }) {
 
+    const [chosenAnswers, setChosenAnswers] = useState([])
 
     // {
     //         id: 0,
@@ -45,21 +46,38 @@ export default function Question({ chooseAnswer, question }) {
     }
 
     const handleChooseAnswer = (answerId, value) => {
-        chooseAnswer(answerId, value);
+        chooseAnswer(question.id, answerId, value);
+        
+        question.type === "multiple"
+    ? setChosenAnswers(prev => {
+        const updated = prev.includes(answerId)
+            ? prev.filter(id => id !== answerId)
+            : [...prev, answerId];
+        
+        return updated;
+      })
+    : setChosenAnswers(prev => {
+        const updated = prev.includes(answerId)
+            ? prev.filter(id => id !== answerId)
+            : [answerId];
+        
+        return updated;
+      });
+
+       
     }
 
-    console.log(question)
 
     return (
         <div id="question-container">
                 <h1>{question.name}</h1>
                 {question.type == "open" ?
-                    <textarea name="" id=""></textarea>
+                    <textarea value={chooseAnswer[0]} onChange={(e)=>handleChooseAnswer(null, e.target.value)}></textarea>
                     :
                     <ul>
                         {question.answers.map((e) => (
                             <li key={e.id}>
-                                <button onClick={() => handleChooseAnswer(e.id, null)} id="answer">
+                                <button style={chosenAnswers.includes(e.id) ? {backgroundColor:"red"}:null} onClick={() => handleChooseAnswer(e.id, null)} id="answer">
                                     {e.answerName}
                                 </button>
                             </li>

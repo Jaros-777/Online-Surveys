@@ -10,7 +10,7 @@ export default function SurveyDetails({ surveyList, setCurrentSection }) {
     const [infoContainerVisibility, setInfoContainerVisibility] = useState(false)
 
     const [surveyDetails, setSurveyDetails] = useState(surveyList)
-    console.log(surveyDetails)
+    // console.log(surveyDetails)
 
     // const [surveyDetails, setSurveyDetails] = useState({
     //     details: {

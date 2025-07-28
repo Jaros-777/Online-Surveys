@@ -3,6 +3,7 @@ package org.jaros.onlinesurveybackend.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.jaros.onlinesurveybackend.model.Survey;
+import org.jaros.onlinesurveybackend.model.SurveyRequest;
 import org.jaros.onlinesurveybackend.repository.SurveyRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,13 @@ public class SurveyService {
         List<Survey> surveyList = surveyRepository.findById(id);
 
         return ResponseEntity.ok(surveyList);
+    }
+
+    public ResponseEntity<?> getSurveyAnswer(SurveyRequest surveyRequest) {
+
+
+
+        return ResponseEntity.ok("ok");
     }
 
 

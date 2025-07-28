@@ -26,6 +26,14 @@ public class SurveyController {
         return surveyService.getSurvey(surveyRequest.getId());
     }
 
+    @PostMapping("/answered")
+    public ResponseEntity<?> getSurveyAnswer(@RequestBody SurveyRequest surveyRequest) {
+       return surveyService.getSurveyAnswer(surveyRequest);
+    }
+
+
+
+
     @PostMapping("/new")
     public ResponseEntity<?> addSurvey(JSONPObject newSurvey) {
 
