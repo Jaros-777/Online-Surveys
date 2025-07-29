@@ -29,7 +29,8 @@ public class AuthSecurity {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/survey/for-user").permitAll()
+                        .requestMatchers("/survey/surveyTaker").permitAll()
+                        .requestMatchers("/survey/answer").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

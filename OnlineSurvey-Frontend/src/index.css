@@ -20,6 +20,7 @@ body {
   --main-grey: #E5E8EB;
   --darker-grey: #dadbdb;
   --main-blue: #0A80ED;
+  --main-darker-blue: rgb(37, 47, 192);
   --main-red:rgb(240, 2, 2);
   --darker-red:rgb(156, 2, 2);
 }
@@ -50,7 +51,7 @@ button{
   
 }
 button:hover{
-    background-color: rgb(37, 47, 192);
+    background-color: var(--main-darker-blue);
   }
 
 h1,h2,h3{

@@ -4,12 +4,12 @@ import { useState } from "react"
 import AddNewSurvey from "../NewSurvey/AddNewSurvey"
 
 
-export default function SurveyDetails({ surveyList, setCurrentSection }) {
+export default function SurveyDetails({ survey, setCurrentSection }) {
 
     const [loaded, setLoaded] = useState(true)
     const [infoContainerVisibility, setInfoContainerVisibility] = useState(false)
 
-    const [surveyDetails, setSurveyDetails] = useState(surveyList)
+    const [surveyDetails, setSurveyDetails] = useState(survey)
     // console.log(surveyDetails)
 
     // const [surveyDetails, setSurveyDetails] = useState({
@@ -103,6 +103,7 @@ export default function SurveyDetails({ surveyList, setCurrentSection }) {
         return <p>Loading...</p>
     }
 
+
     return (
         loaded ?
             <div id="survey-container">
@@ -128,7 +129,7 @@ export default function SurveyDetails({ surveyList, setCurrentSection }) {
                 </div>
                 <h3>Results:</h3>
                 {surveyDetails.questions.map((e, index) => (
-                    <Details key={e.id} index={index+1} totalAttempts={surveyList.totalAttempts} question={e}></Details>
+                    <Details key={e.id} index={index+1} totalAttempts={surveyDetails.totalAttempts} question={e}></Details>
                 ))}
             </div>
 

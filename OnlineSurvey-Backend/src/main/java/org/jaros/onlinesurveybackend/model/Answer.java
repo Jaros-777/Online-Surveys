@@ -1,13 +1,12 @@
 package org.jaros.onlinesurveybackend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -15,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Answer {
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "question_id")
@@ -28,5 +28,10 @@ public class Answer {
         this.question = question;
         this.answerName = answerName;
         this.chosenCount = chosenCount;
+    }
+    public Answer( Question question, String answerName) {
+        this.id = UUID.randomUUID().toString().hashCode();
+        this.question = question;
+        this.answerName = answerName;
     }
 }

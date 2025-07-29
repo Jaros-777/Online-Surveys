@@ -17,6 +17,7 @@ import java.util.List;
 public class Question {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "survey_id")
@@ -31,8 +32,10 @@ public class Question {
     private List<Integer> correctAnswer;
     @ElementCollection
     private List<Integer> chosenAnswers;
+    @ElementCollection
+    private List<String> openAnswer;
 
-    public Question(int id,Survey survey, String name, String type, List<Answer> answers, List<Integer> correctAnswer, List<Integer> chosenAnswers) {
+    public Question(int id,Survey survey, String name, String type, List<Answer> answers, List<Integer> correctAnswer, List<Integer> chosenAnswers, List<String> openAnswer) {
         this.id = id;
         this.survey = survey;
         this.name = name;
@@ -40,6 +43,7 @@ public class Question {
         this.answers = answers;
         this.correctAnswer = correctAnswer;
         this.chosenAnswers = chosenAnswers;
+        this.openAnswer = openAnswer;
     }
 
 }

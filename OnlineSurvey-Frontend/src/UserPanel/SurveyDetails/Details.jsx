@@ -42,7 +42,7 @@ export default function Details({ index, question, totalAttempts }) {
         answeredCount = answeredCount + question.answers[i].chosenCount;
     }
 
-    // console.log(answeredCount)
+    console.log(question)
     return (
         <>
             <div className="details-content">

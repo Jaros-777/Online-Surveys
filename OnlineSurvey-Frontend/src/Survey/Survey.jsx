@@ -15,10 +15,10 @@ export default function Survey() {
 
     const fetchSurvey = async () => {
         try {
-            const response = await axios.post(`http://localhost:8080/survey/for-user`, { id: id.id });
+            const response = await axios.post(`http://localhost:8080/survey/surveyTaker`, { id: id.id });
             // console.log(user.token)
-            // console.log(response.data[0])
-            setSurveyDetails(response.data[0])
+            // console.log(response.data)
+            setSurveyDetails(response.data)
             setLoaded(true)
 
         } catch (error) {
@@ -29,6 +29,14 @@ export default function Survey() {
     }
 
     const sendAnswers = async () => {
+        
+        console.log(surveyDetails)
+        try {
+            await axios.post("http://localhost:8080/survey/answer", surveyDetails)
+        } catch (error) {
+            console.log(error)
+        }
+        
 
     }
 
@@ -40,9 +48,19 @@ export default function Survey() {
                 if (q.id === questionId) {
                     
                     if (q.type === "open") {
+                        // answers:
+                        // {
+                        //     answerName: value
+                        // }
                         return {
-                            ...q,
-                            chosenAnswers: value
+                             ...q,
+                            // openAnswer: value
+                            answers:
+                                [{
+                                    id:0,
+                                    answerName: value,
+                                    chosenCount:1
+                                }]
                         };
                     }
 
@@ -63,7 +81,7 @@ export default function Survey() {
                 return q;
             })
         };
-        console.log(updated)
+        // console.log(updated)
         return updated;
     });
 };

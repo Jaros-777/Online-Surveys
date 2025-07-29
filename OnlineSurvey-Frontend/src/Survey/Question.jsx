@@ -77,7 +77,7 @@ export default function Question({ chooseAnswer, question }) {
                     <ul>
                         {question.answers.map((e) => (
                             <li key={e.id}>
-                                <button style={chosenAnswers.includes(e.id) ? {backgroundColor:"red"}:null} onClick={() => handleChooseAnswer(e.id, null)} id="answer">
+                                <button style={chosenAnswers.includes(e.id) ? {backgroundColor:"lightcoral"}:null} onClick={() => handleChooseAnswer(e.id, null)} id="answer">
                                     {e.answerName}
                                 </button>
                             </li>

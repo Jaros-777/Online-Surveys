@@ -16,19 +16,19 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
-    @PostMapping("/general")
+    @PostMapping("/userSurveys")
     public ResponseEntity<?> getSurveyDetails(@RequestBody SurveyRequest surveyRequest) {
         return surveyService.getSurveyDetails(surveyRequest.getId());
     }
 
-    @PostMapping("/for-user")
+    @PostMapping("/surveyTaker")
     public ResponseEntity<?> getSurvey(@RequestBody SurveyRequest surveyRequest) {
         return surveyService.getSurvey(surveyRequest.getId());
     }
 
-    @PostMapping("/answered")
-    public ResponseEntity<?> getSurveyAnswer(@RequestBody SurveyRequest surveyRequest) {
-       return surveyService.getSurveyAnswer(surveyRequest);
+    @PostMapping("/answer")
+    public ResponseEntity<?> getSurveyAnswer(@RequestBody Survey survey) {
+       return surveyService.getSurveyAnswer(survey);
     }
 
 

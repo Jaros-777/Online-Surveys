@@ -40,11 +40,11 @@ public class Survey {
     public String toJson() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            // mapujemy obiekt na JSON string
+
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            return "{}";  // albo zwróć null lub rzuć wyjątek wg potrzeb
+            return "{}";
         }
     }
 }

@@ -39,7 +39,7 @@ export default function UserPanel() {
         //fetch id, name and answers count
         // console.log(user.id)
         try {
-            const response = await axios.post(`http://localhost:8080/survey/general`, { id: user.id }, {
+            const response = await axios.post(`http://localhost:8080/survey/userSurveys`, { id: user.id }, {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 },
@@ -87,7 +87,7 @@ export default function UserPanel() {
                             <ul>
                                 {surveyList.length == 0 ? <p>You don't have any surveys yet </p> :
                                     surveyList.map((e) => (
-                                        <li onClick={()=>setCurrentSection(<SurveyDetails key={e.id} setCurrentSection={setCurrentSection} surveyList={e}></SurveyDetails>)} key={e.id} className="surveyButton">
+                                        <li onClick={()=>setCurrentSection(<SurveyDetails key={e.id} setCurrentSection={setCurrentSection} survey={e}></SurveyDetails>)} key={e.id} className="surveyButton">
                                             <p>{e.title}</p>
                                             <p>{e.totalAttempts} received</p>
                                         </li>
