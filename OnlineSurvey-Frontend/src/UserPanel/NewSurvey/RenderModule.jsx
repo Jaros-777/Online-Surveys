@@ -1,16 +1,18 @@
 import { useState } from "react";
 import "./RenderModule.scss"
 
-export default function RenderModule({ id, questionDetails, deleteQuestion, updateQuestion, updateAnswers, deleteAnswer, toggleCorrectAnswer }) {
-    const { questionName, type, answers } = questionDetails;
+export default function RenderModule({ id, question, deleteQuestion, updateQuestion, updateAnswers, deleteAnswer, toggleCorrectAnswer }) {
+    // const { questionName, type, answers } = questionDetails;
+    // console.log(question)
+    // console.log(question.id)
 
-    const handleInputChange = (e) => {
-        updateQuestion(id, "questionName", e.target.value);
-    };
+    // const handleInputChange = (e) => {
+    //     updateQuestion(id, e.target.value);
+    // };
 
-    const handleAnswersChange = (answerId, value) => {
-        updateAnswers(id, answerId, value);
-    };
+    // const handleAnswersChange = (answerId, value) => {
+    //     updateAnswers(id, answerId, value);
+    // };
 
     const handleDeleteAnswer = (answerId) => {
         deleteAnswer(id, answerId);
@@ -24,22 +26,22 @@ export default function RenderModule({ id, questionDetails, deleteQuestion, upda
     return (
         <div className="render-module">
             <div id="deleteQuestion">
-                <button onClick={() => deleteQuestion(id)}>X</button>
+                <button onClick={() => deleteQuestion(question.id)}>X</button>
             </div>
 
             <p style={{margin:"1rem 0"}} >Question</p>
             <input
                 type="text"
                 placeholder="Enter your question"
-                onChange={handleInputChange}
-                value={questionName}
+                onChange={(e)=>updateQuestion(question.id,"name", e.target.value)}
+                value={question.name}
             />
 
             <div id="answer-type">
-                <button style={type === "single" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "single")} className="simple-button">Single correct answer</button>
-                <button style={type === "multiple" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "multiple")} className="simple-button">Multiple correct answer</button>
-                <button style={type === "open" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "open")} className="simple-button">Open question</button>
-                <button style={type === "any" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(id, "type", "any")} className="simple-button">Witchout correct answer</button>
+                <button style={question.type === "single" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "single")} className="simple-button">Single correct answer</button>
+                <button style={question.type === "multiple" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "multiple")} className="simple-button">Multiple correct answer</button>
+                <button style={question.type === "open" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "open")} className="simple-button">Open question</button>
+                <button style={question.type === "any" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "any")} className="simple-button">Witchout correct answer</button>
                 {/* <div className="type">
                     <input
                         type="radio"
@@ -82,27 +84,28 @@ export default function RenderModule({ id, questionDetails, deleteQuestion, upda
                 <p>Choose good {type === "single" ? "answer" : "answers"} in checkbox</p>
             </div> */}
 
-            {type !== "open" && (
+            {question.type !== "open" && (
                 <>
-                    {answers.map((e) => (
-                        <div key={e.answerId} className="answer">
+                    {question.answers.map((e) => (
+                        <div key={e.id} className="answer">
                             <input
                                 type="text"
                                 placeholder="Answer"
                                 value={e.answerName}
-                                onChange={(ev) => handleAnswersChange(e.answerId, ev.target.value)}
+                                onChange={(ev) => updateAnswers(question.id, e.id, ev.target.value)}
                             />
-                            {(type === "any" ? null : <input name={`correct-${id}`} onChange={(ev) => handleCorrectChange(e.answerId, ev.target.checked)} checked={questionDetails.correctAnswers.includes(e.answerId)} type={type === "single" ? "radio" : "checkbox"} />)}
+                            {(question.type === "any" ? null : <input name={`correct-${question.id}`} onChange={(ev) => handleCorrectChange(question.id, e.id, ev.target.checked)} checked={question.correctAnswer.includes(e.id)} type={question.type === "single" ? "radio" : "checkbox"} />)}
 
-                            <button onClick={() => handleDeleteAnswer(e.answerId)}>Delete</button>
+                            <button onClick={() => deleteAnswer(question.id, e.id)}>Delete</button>
                         </div>
                     ))}
                     <button onClick={() => {
                         const newAnswer = {
-                            answerId: Date.now(),
-                            answerName: ""
+                            id: Date.now(),
+                            answerName: "",
+                            chosenCount:0
                         };
-                        updateQuestion(id, "answers", [...answers, newAnswer]);
+                        updateQuestion(question.id, "answers", [...question.answers, newAnswer]);
                     }}>Add new answer</button>
                 </>
             )}

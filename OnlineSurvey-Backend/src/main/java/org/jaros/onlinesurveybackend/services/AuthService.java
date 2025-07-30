@@ -69,10 +69,11 @@ public class AuthService implements UserDetailsService {
 
         if(!userRepository.existsByEmail(login.getEmail())){
             userRepository.save(new User(login.getEmail(), passwordEncoder.encode(login.getPassword())));
-            String token = jwtUtil.generateToken(login.getEmail());
-
-            return ResponseEntity.ok()
-                    .body(Map.of("token", token, "email", login.getEmail()));
+//            String token = jwtUtil.generateToken(login.getEmail());
+//
+//            return ResponseEntity.ok()
+//                    .body(Map.of("token", token, "email", login.getEmail()));
+            return ResponseEntity.ok().body("Correct");
         }else{
             return ResponseEntity.status(401).body("Użytkownik już istnieje");
         }

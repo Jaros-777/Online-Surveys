@@ -2,32 +2,33 @@ import { useEffect, useState } from "react";
 import "./AddNewSurvey.scss";
 import RenderModule from "./RenderModule.jsx"
 
-export default function AddNewSurvey({funct, surveyId}) {
-    const[surveyDetails,setSurveyDetails] = useState(
+export default function AddNewSurvey({ funct, survey }) {
+    const [surveyDetails, setSurveyDetails] = useState(
         {
-            id: 0,
-            title:"",
-            description:"",
-            randomOrder: false
+            id: Date.now(),
+            title: "",
+            description: "",
+            totalAttempts: 0,
+            randomOrder: false,
+            questions: [
+                {
+                    id: Date.now(),
+                    name: "question name",
+                    type: "single",
+                    correctAnswer: [],
+                    openAnswer: [],
+                    answers: [
+                        {
+                            id: Date.now(),
+                            answerName: "",
+                            chosenCount: 0
+                        }
+                    ]
+                }
+            ]
         }
     )
-    const [modulList, setModuleList] = useState([
-        {
-            id: 0,
-            questionDetails: {
-                questionName: "",
-                type: "single",
-                answers: [
-                    {
-                        questionId:0,
-                        answerId: 0,
-                        answerName: ""
-                    },
-                ],
-                correctAnswers: []
-            }
-        }
-    ]);
+    // console.log(surveyDetails)
 
 
     const deleteQuestion = (idToRemove) => {
@@ -35,20 +36,25 @@ export default function AddNewSurvey({funct, surveyId}) {
     };
 
     const deleteAnswer = (id, answerId) => {
-        setModuleList(prevList =>
-            prevList.map(q =>
-                q.id === id
-                    ? {
-                        ...q,
-                        questionDetails: {
-                            ...q.questionDetails,
-                            answers: q.questionDetails.answers.filter(ans => ans.answerId !== answerId),
-                            correctAnswers: q.questionDetails.correctAnswers.filter(ca => ca !== answerId)
-                        }
-                    }
-                    : q
-            )
-        );
+
+        setSurveyDetails(prev => {
+            const updatedSurvey = {
+                ...prev,
+                questions:
+                    prev.questions.map(q =>
+                        q.id === id ?
+                            {
+                                ...q,
+                                answers:
+                                    q.answers.filter(ans => ans.id !== answerId),
+                                correctAnswer: q.correctAnswer.filter(ca => ca !== answerId)
+                            } :
+                            q
+                    )
+            }
+            // console.log(updatedSurvey)
+            return updatedSurvey
+        })
     };
 
     const addQuestion = () => {
@@ -70,96 +76,138 @@ export default function AddNewSurvey({funct, surveyId}) {
         ]);
     };
 
-    const updateQuestion = (id, field, value) => {
-        setModuleList(prev =>
-            prev.map(q =>
-                q.id === id
-                    ? {
-                        ...q,
-                        questionDetails: {
-                            ...q.questionDetails,
-                            [field]: value
-                        }
-                    }
-                    : q
-            )
-        );
+    const updateQuestion = (id,field, value) => {
+        // console.log(id,value)
+
+        setSurveyDetails(prev => {
+            const updatedSurvey = {
+                ...prev,
+                questions:
+                    prev.questions.map(q =>
+                        q.id === id ?
+                            { ...q, [field]: value } :
+                            q
+                    )
+            }
+            // console.log(updatedSurvey)
+            return updatedSurvey
+        })
+
+
+
     };
 
     const updateAnswers = (id, answerId, value) => {
-        setModuleList(prev =>
-            prev.map(q =>
-                q.id === id
-                    ? {
-                        ...q,
-                        questionDetails: {
-                            ...q.questionDetails,
-                            answers: q.questionDetails.answers.map(ans =>
-                                ans.answerId === answerId
-                                    ? { ...ans, answerName: value }
-                                    : ans
-                            )
-                        }
-                    }
-                    : q
-            )
-        );
+
+        setSurveyDetails(prev => {
+            const updatedSurvey = {
+                ...prev,
+                questions:
+                    prev.questions.map(q =>
+                        q.id === id ?
+                            {
+                                ...q,
+                                answers:
+                                    q.answers.map(a =>
+                                        a.id == answerId ?
+                                            { ...a, answerName: value } :
+                                            a
+                                    )
+                            } :
+                            q
+                    )
+            }
+            // console.log(updatedSurvey)
+            return updatedSurvey
+        })
+
+        // setModuleList(prev =>
+        //     prev.map(q =>
+        //         q.id === id
+        //             ? {
+        //                 ...q,
+        //                 questionDetails: {
+        //                     ...q.questionDetails,
+        //                     answers: q.questionDetails.answers.map(ans =>
+        //                         ans.answerId === answerId
+        //                             ? { ...ans, answerName: value }
+        //                             : ans
+        //                     )
+        //                 }
+        //             }
+        //             : q
+        //     )
+        // );
     };
 
-    const toggleCorrectAnswer = (id, answerId, isChecked) => {
-        setModuleList(prev =>
-            prev.map(q => {
-                if (q.id !== id) return q;
+    const toggleCorrectAnswer = (questionId, answerId, isChecked) => {
 
-                const { type, correctAnswers } = q.questionDetails;
+        setSurveyDetails(prev => {
+            const updatedSurvey = {
+                ...prev,
+                questions:
+                    prev.questions.map(q =>
+                        q.id === questionId ?
+                            {
+                                ...q,
+                                ...(q.type === "single" ?
+                                    {correctAnswer:[answerId]} :
+                                    q.type)
+                                // correctAnswer: prev.correctAnswer.map(ca =>
+                                //     q.type === "single" ?
+                                //     {[answerId]} :
+                                //     ca
+                                // )
+                            } :
+                            q
+                    )
+            }
+            console.log(updatedSurvey.questions[0])
+            return updatedSurvey
+        })
 
-                let newCorrectAnswers;
-                if (type === "single") {
-                    newCorrectAnswers = isChecked ? [answerId] : [];
-                } else {
-                    if (isChecked) {
-                        newCorrectAnswers = [...correctAnswers, answerId];
-                    } else {
-                        newCorrectAnswers = correctAnswers.filter(id => id !== answerId);
-                    }
-                }
+        // setModuleList(prev =>
+        //     prev.map(q => {
+        //         if (q.id !== id) return q;
 
-                return {
-                    ...q,
-                    questionDetails: {
-                        ...q.questionDetails,
-                        correctAnswers: newCorrectAnswers
-                    }
-                };
-            })
-        );
+        //         const { type, correctAnswers } = q.questionDetails;
+
+        //         let newCorrectAnswers;
+        //         if (type === "single") {
+        //             newCorrectAnswers = isChecked ? [answerId] : [];
+        //         } else {
+        //             if (isChecked) {
+        //                 newCorrectAnswers = [...correctAnswers, answerId];
+        //             } else {
+        //                 newCorrectAnswers = correctAnswers.filter(id => id !== answerId);
+        //             }
+        //         }
+
+        //         return {
+        //             ...q,
+        //             questionDetails: {
+        //                 ...q.questionDetails,
+        //                 correctAnswers: newCorrectAnswers
+        //             }
+        //         };
+        //     })
+        // );
     };
 
-    const handleCreateSurvey = async() => {
-        const JsonToSend = {
-            details: surveyDetails,
-            questions: modulList,
+    const handleCreateSurvey = async () => {
+        console.log(surveyDetails)
+    };
+    const handleUpdateSurvey = async () => {
+        console.log(surveyDetails)
+    };
+
+
+    useEffect(() => {
+        if (funct == "change") {
+            setSurveyDetails(survey)
+            console.log("useEffect", survey)
         }
-        console.log(JsonToSend)
-    };
-    const handleUpdateSurvey = async() => {
-        const JsonToSend = {
-            details: surveyDetails,
-            questions: modulList,
-        }
-        console.log(JsonToSend)
-    };
-
-    const fetchSurvey = async()=>{
-        // only while changing current survey
-    }
-
-    useEffect(()=>{
-        if(funct == "change"){
-            fetchSurvey();
-        }
-        // console.log(funct, surveyId)
-    },[])
+    }, [funct, survey])
 
 
     return (
@@ -167,21 +215,20 @@ export default function AddNewSurvey({funct, surveyId}) {
             <h1>Create a new survey</h1>
             <section>
                 <p>Survey Title</p>
-                <input type="text" placeholder="Enter survey title" onChange={(e)=>setSurveyDetails({ ...surveyDetails,title: e.target.value} )} value={surveyDetails.title}/>
+                <input type="text" placeholder="Enter survey title" onChange={(e) => setSurveyDetails({ ...surveyDetails, title: e.target.value })} value={surveyDetails.title} />
             </section>
             <section>
                 <p>Survey Description</p>
-                <textarea value={surveyDetails.description} onChange={(e)=>setSurveyDetails({ ...surveyDetails,  description: e.target.value} )} placeholder="Description of your survey"></textarea>
+                <textarea value={surveyDetails.description} onChange={(e) => setSurveyDetails({ ...surveyDetails, description: e.target.value })} placeholder="Description of your survey"></textarea>
             </section>
             {/* <div id="description">
                 <textarea name={description} onChange={(e)=>setDescription(e.target.value)} placeholder="Description of your survey"></textarea>
             </div> */}
             <p style={{ marginTop: "1rem", fontWeight: "bold" }} >Questions</p>
-            {modulList.map((e) => (
+            {surveyDetails.questions.map((e) => (
                 <RenderModule
                     key={e.id}
-                    id={e.id}
-                    questionDetails={e.questionDetails}
+                    question={e}
                     deleteQuestion={deleteQuestion}
                     updateQuestion={updateQuestion}
                     updateAnswers={updateAnswers}
@@ -193,7 +240,7 @@ export default function AddNewSurvey({funct, surveyId}) {
             <div id="answer-option">
                 <p style={{ fontWeight: "bold" }}>Configuration</p>
                 <div className="option">
-                    <input type="checkbox" value={surveyDetails.randomOrder} onChange={(e)=>setSurveyDetails({ ...surveyDetails,  randomOrder: e.target.checked} )} />
+                    <input type="checkbox" value={surveyDetails.randomOrder} onChange={(e) => setSurveyDetails({ ...surveyDetails, randomOrder: e.target.checked })} />
                     <p>Random order</p>
                 </div>
             </div>

@@ -28,7 +28,7 @@ const Auth = (props) => {
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("email", res.data.email)
             localStorage.setItem("id", res.data.userId)
-            navigate("/panel")
+            isRegistering ? setIsRegistering(false) : navigate("/panel")
         } catch (err) {
             setBadLogging(true)
         }
@@ -59,7 +59,7 @@ const Auth = (props) => {
                         required
                     />
                     <p style={{textAlign:"right", fontSize:"1rem", textDecoration:"underline", cursor:"pointer", paddingBottom:"1rem"}}>Forgot password?</p>
-                    {badLogging? <p style={{color:"red", padding:"1rem 0"}} >Wrong email or password</p> : null}
+                    {!isRegistering ? (badLogging? <p style={{color:"red", padding:"1rem 0"}} >Wrong email or password</p> : null) : null}
                     
                     <button type="submit">
                         {isRegistering ? "Sing up" : "Log in"}

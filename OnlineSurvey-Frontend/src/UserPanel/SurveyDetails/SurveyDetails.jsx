@@ -109,7 +109,7 @@ export default function SurveyDetails({ survey, setCurrentSection }) {
             <div id="survey-container">
                 <div id="top">
                     <h1>{surveyDetails.title}</h1>
-                    <button onClick={() => setCurrentSection(<AddNewSurvey funct={"change"} surveyId={surveyDetails.id} ></AddNewSurvey>)} >Edit</button>
+                    <button onClick={() => setCurrentSection(<AddNewSurvey funct={"change"} survey={survey} ></AddNewSurvey>)} >Edit</button>
                 </div>
                 <div id="link-to-survey">
                     <div id="link-text">
