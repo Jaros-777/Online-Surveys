@@ -16,6 +16,9 @@ Online Surveys is a simple but functional web project that allows anyone - from 
 ## 🚀 Purpose of the project  
 The project serves an educational purpose - it's a testing ground for learning modern web technologies, client-server architecture and creating full-fledged CRUD applications.  
 
+## 🎥 Video
+[![Demo](https://img.youtube.com/vi/2phzTX5dobg/0.jpg)](https://www.youtube.com/watch?v=2phzTX5dobg)
+
 ## 📸 Screenshots  
 <img width="1659" height="871" alt="image" src="https://github.com/user-attachments/assets/1bb01157-2a11-4537-bd2b-058fa4324dee" />  
 <img width="1659" height="875" alt="image" src="https://github.com/user-attachments/assets/919a677d-4271-4798-9c0c-1086cd6c242e" />  
