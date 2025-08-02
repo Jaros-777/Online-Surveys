@@ -57,6 +57,7 @@ export default function UserPanel() {
     const LogOut=()=>{
         localStorage.removeItem("email")
         localStorage.removeItem("token")
+        localStorage.removeItem("id")
         localStorage.clear();
         nav("/")
     }

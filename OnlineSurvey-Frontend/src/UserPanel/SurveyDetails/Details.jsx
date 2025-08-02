@@ -42,7 +42,7 @@ export default function Details({ index, question, totalAttempts }) {
         answeredCount = answeredCount + question.answers[i].chosenCount;
     }
 
-    console.log(question)
+    // console.log(question)
     return (
         <>
             <div className="details-content">
@@ -61,8 +61,8 @@ export default function Details({ index, question, totalAttempts }) {
                                         <p>{answeredCount > 0 ? Math.round(100 / answeredCount * e.chosenCount) : 0} %</p>
                                     </div>
                                     <div className="graphic-content">
-                                        <div className="empty">
-                                            <div style={{ width: `${answeredCount > 0 ? Math.round(100 / answeredCount * e.chosenCount) : 0}%` }} className="full"></div>
+                                        <div style={ question.correctAnswer.includes(e.id) ? { backgroundColor:"rgb(173, 216, 230)"} : null} className="empty">
+                                            <div style={{ width: `${answeredCount > 0 ? Math.round(100 / answeredCount * e.chosenCount) : 0}%`}} className="full"></div>
                                         </div>
 
                                     </div>

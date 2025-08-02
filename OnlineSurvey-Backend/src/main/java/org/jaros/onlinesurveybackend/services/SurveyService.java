@@ -1,6 +1,10 @@
 package org.jaros.onlinesurveybackend.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.jaros.onlinesurveybackend.dto.NewAnswerDTO;
+import org.jaros.onlinesurveybackend.dto.NewQuestionDTO;
+import org.jaros.onlinesurveybackend.dto.NewSurveyDTO;
 import org.jaros.onlinesurveybackend.model.Answer;
 import org.jaros.onlinesurveybackend.model.Question;
 import org.jaros.onlinesurveybackend.model.Survey;
@@ -10,7 +14,9 @@ import org.jaros.onlinesurveybackend.repository.SurveyRepository;
 import org.jaros.onlinesurveybackend.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,14 +24,12 @@ import java.util.Optional;
 @Service
 public class SurveyService {
 
-    private final UserRepository userRepository;
-    SurveyRepository surveyRepository;
-    AnswerRepository answerRepository;
-    QuestionRepository questionRepository;
+    private final SurveyRepository surveyRepository;
+    private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
 
-    public SurveyService(SurveyRepository surveyRepository, UserRepository userRepository, AnswerRepository answerRepository, QuestionRepository questionRepository) {
+    public SurveyService(SurveyRepository surveyRepository, AnswerRepository answerRepository, QuestionRepository questionRepository) {
         this.surveyRepository = surveyRepository;
-        this.userRepository = userRepository;
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
     }
@@ -40,8 +44,22 @@ public class SurveyService {
     public ResponseEntity<?> getSurvey(int id) {
 
         Optional<Survey> surveyList = surveyRepository.findById(id);
+        Survey survey = surveyList.get();
+        survey.setUserId(0);
+        for(Question question : survey.getQuestions()) {
+            if(question.getType().equals("open")) {
+                Answer answer = new Answer( question, "", 0);
+                question.setAnswers(List.of(answer));
 
-        return ResponseEntity.ok(surveyList);
+            }else{
+                for(Answer answer : question.getAnswers()) {
+                    answer.setChosenCount(0);
+                }
+            }
+
+        }
+
+        return ResponseEntity.ok(survey);
     }
 
     public ResponseEntity<?> getSurveyAnswer(Survey survey) {
@@ -49,17 +67,17 @@ public class SurveyService {
 
 
 
-        System.out.println(survey.toJson());
+//        System.out.println(survey.toJson());
 
         for(Question question : survey.getQuestions()) {
 
-            if(Objects.equals(question.getType(), "open")) {
+            if(Objects.equals(question.getType(), "open") && !question.getAnswers().getFirst().getAnswerName().equals("")) {
 
                 Question questionFromDB = questionRepository.findById(question.getId()).orElse(null);
 
 
                 Answer newAnswer = new Answer(questionFromDB, question.getAnswers().getFirst().getAnswerName());
-                System.out.println(question.getAnswers().getFirst().getAnswerName());
+//                System.out.println("otwarte" + question.getAnswers().getFirst().getAnswerName());
                 answerRepository.save(newAnswer);
 
                 questionRepository.findById(question.getId()).get();
@@ -98,10 +116,38 @@ public class SurveyService {
 
 
 
-    public ResponseEntity<?> addSurvey(JSONPObject newSurvey) {
-        JSONPObject jsonPObject = new JSONPObject("details", 1);
+    public ResponseEntity<?> addSurvey(@RequestBody NewSurveyDTO surveyFromFrontend) {
+        ObjectMapper mapper = new ObjectMapper();
+        NewSurveyDTO newSurvey = mapper.convertValue(surveyFromFrontend, NewSurveyDTO.class);
 
-        return ResponseEntity.ok(jsonPObject);
+
+//        System.out.println("saved " + newSurvey.toJson());
+
+        List<Question> questions = new ArrayList<>();
+        Survey survey = new Survey(newSurvey.getUserId(), newSurvey.getTitle(), newSurvey.getDescription(), newSurvey.getTotalAttempts(), newSurvey.getRandomOrder(), questions);
+        for(NewQuestionDTO question : newSurvey.getQuestions()) {
+
+            List<Answer> answers = new ArrayList<>();
+            Question newQuestion = new Question(survey, question.getName(), question.getType(),answers, question.getCorrectAnswer(), List.of(), question.getOpenAnswer());
+
+            for(NewAnswerDTO answer : question.getAnswers()) {
+                Answer newAnswer = new Answer(newQuestion, answer.getAnswerName(), answer.getChosenCount());
+                answers.add(newAnswer);
+            }
+
+            newQuestion.setAnswers(answers);
+            questions.add(newQuestion);
+
+
+
+        }
+        survey.setQuestions(questions);
+        surveyRepository.save(survey);
+//        System.out.println("saved " + survey.toJson());
+
+
+//        surveyRepository.save(survey);
+        return ResponseEntity.ok("ok");
     }
 
 

@@ -10,6 +10,7 @@ export default function Survey() {
 
     const [surveyDetails, setSurveyDetails] = useState(null)
     const [loaded, setLoaded] = useState(false)
+    const [finished, setFinished] = useState(false)
 
 
 
@@ -29,14 +30,32 @@ export default function Survey() {
     }
 
     const sendAnswers = async () => {
-        
-        console.log(surveyDetails)
-        try {
-            await axios.post("http://localhost:8080/survey/answer", surveyDetails)
-        } catch (error) {
-            console.log(error)
+
+        // console.log(surveyDetails)
+        // console.log(surveyDetails.questions[0].chosenAnswers.length)
+
+        let toSend = false;
+
+        for (let i = 0; i < surveyDetails.questions.length; i++) {
+            if ((surveyDetails.questions[i].type == "open" && surveyDetails.questions[i].answers[0].answerName !== "") || surveyDetails.questions[i].chosenAnswers.length > 0 ) {
+                toSend = true;
+                break;
+            }
         }
-        
+
+
+        if (toSend) {
+            // console.log("wyslane")
+            try {
+                await axios.post("http://localhost:8080/survey/answer", surveyDetails)
+                setFinished(true)
+                toSend = false
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+
 
     }
 
@@ -45,43 +64,42 @@ export default function Survey() {
         const updated = {
             ...prev,
             questions: prev.questions.map(q => {
-                if (q.id === questionId) {
-                    
-                    if (q.type === "open") {
-                        // answers:
-                        // {
-                        //     answerName: value
-                        // }
-                        return {
-                             ...q,
-                            // openAnswer: value
-                            answers:
-                                [{
-                                    id:0,
-                                    answerName: value,
-                                    chosenCount:1
-                                }]
-                        };
-                    }
+                if (q.id !== questionId) return q;
 
-                    
-                    const isMultiple = q.type === "multiple";
-
-                    const updatedChosenAnswers = isMultiple
-                        ? q.chosenAnswers.includes(answerId)
-                            ? q.chosenAnswers.filter(id => id !== answerId)
-                            : [...q.chosenAnswers, answerId]
-                        : [answerId];
-
+                if (q.type === "open") {
                     return {
                         ...q,
-                        chosenAnswers: updatedChosenAnswers
+                        answers: [{
+                            id: 0,
+                            answerName: value,
+                            chosenCount: 1
+                        }]
                     };
                 }
-                return q;
+
+                const isMultiple = q.type === "multiple";
+                const wasAlreadyChosen = q.chosenAnswers.includes(answerId);
+
+                let updatedChosenAnswers;
+
+                if (isMultiple) {
+                    // toggle
+                    updatedChosenAnswers = wasAlreadyChosen
+                        ? q.chosenAnswers.filter(id => id !== answerId)
+                        : [...q.chosenAnswers, answerId];
+                } else {
+                    // single (radio-like with toggle behavior)
+                    updatedChosenAnswers = wasAlreadyChosen
+                        ? [] // unselect if already selected
+                        : [answerId];
+                }
+
+                return {
+                    ...q,
+                    chosenAnswers: updatedChosenAnswers
+                };
             })
         };
-        // console.log(updated)
         return updated;
     });
 };
@@ -98,21 +116,30 @@ export default function Survey() {
     return (
         <div id="survey-container">
             <div id="survey-content">
-                <div id="description">
-                    <h1>{surveyDetails.title}</h1>
-                    <h3>{surveyDetails.description}</h3>
-                </div>
-                <ul>
-                    {surveyDetails.questions.map((e) => (
-                        <li key={e.id}>
-                            <Question question={e} chooseAnswer={chooseAnswer}></Question>
-                        </li>
+                {finished ?
+                    <div id="info">
+                        <h2 style={{ textAlign: "center", padding: "3rem 0rem" }}>Your responses have been sent. Thank you for your time.</h2>
+                    </div>
+                    :
+                    <>
+                        <div id="description">
+                            <h1>{surveyDetails.title}</h1>
+                            <h3>{surveyDetails.description}</h3>
+                        </div>
+                        <ul>
+                            {surveyDetails.questions.map((e) => (
+                                <li key={e.id}>
+                                    <Question question={e} chooseAnswer={chooseAnswer}></Question>
+                                </li>
 
-                    ))}
-                </ul>
+                            ))}
+                        </ul>
 
-                <button onClick={sendAnswers}>Send answers</button>
+                        <button onClick={sendAnswers}>Send answers</button>
+                    </>
+                }
             </div>
+
 
         </div>
     )

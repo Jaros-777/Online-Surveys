@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Answer {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "question_id")
@@ -23,12 +23,13 @@ public class Answer {
     private String answerName;
     private int chosenCount;
 
-    public Answer(int id, Question question, String answerName, int chosenCount) {
-        this.id = id;
+    //for data loader
+    public Answer( Question question, String answerName, int chosenCount) {
         this.question = question;
         this.answerName = answerName;
         this.chosenCount = chosenCount;
     }
+    //for surveySerive.getSurveyAnswer - open answers
     public Answer( Question question, String answerName) {
         this.id = UUID.randomUUID().toString().hashCode();
         this.question = question;

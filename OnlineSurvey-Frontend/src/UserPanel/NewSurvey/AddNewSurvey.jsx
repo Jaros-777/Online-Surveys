@@ -1,25 +1,31 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./AddNewSurvey.scss";
 import RenderModule from "./RenderModule.jsx"
+import { v4 as uuidv4 } from 'uuid';
+import { User } from "../../App.jsx";
+import axios from "axios";
 
 export default function AddNewSurvey({ funct, survey }) {
+    const [user, setUser] = useContext(User)
     const [surveyDetails, setSurveyDetails] = useState(
         {
-            id: Date.now(),
+            id: uuidv4(),
             title: "",
             description: "",
             totalAttempts: 0,
             randomOrder: false,
+            userId: user.id,
             questions: [
                 {
-                    id: Date.now(),
-                    name: "question name",
-                    type: "single",
+                    id: uuidv4(),
+                    name: "",
+                    type: "any",
                     correctAnswer: [],
                     openAnswer: [],
+                    chosenAnswers:[],
                     answers: [
                         {
-                            id: Date.now(),
+                            id: uuidv4(),
                             answerName: "",
                             chosenCount: 0
                         }
@@ -32,7 +38,16 @@ export default function AddNewSurvey({ funct, survey }) {
 
 
     const deleteQuestion = (idToRemove) => {
-        setModuleList(prevList => prevList.filter(q => q.id !== idToRemove));
+        setSurveyDetails(prev => {
+            const updatedSurvey = {
+                ...prev,
+                questions:
+                    prev.questions.filter(q => q.id !== idToRemove)
+            }
+            // console.log(updatedSurvey)
+            return updatedSurvey
+        })
+
     };
 
     const deleteAnswer = (id, answerId) => {
@@ -58,34 +73,45 @@ export default function AddNewSurvey({ funct, survey }) {
     };
 
     const addQuestion = () => {
-        setModuleList(prev => [
-            ...prev,
-            {
-                id: Date.now(),
-                questionDetails: {
-                    questionName: "",
-                    type: "single",
-                    answerCount: 1,
-                    answers: [{
-                        answerId: Date.now(),
-                        answerName: ""
-                    }],
-                    correctAnswers: []
+        setSurveyDetails(prev => {
+            const updatedSurvey = {
+                ...prev,
+                questions: [...prev.questions,
+                {
+                    id: uuidv4(),
+                    name: "",
+                    type: "any",
+                    correctAnswer: [],
+                    openAnswer: [],
+                    answers: [
+                        {
+                            id: uuidv4(),
+                            answerName: "",
+                            chosenCount: 0
+                        }
+                    ]
                 }
+                ]
             }
-        ]);
+
+            return updatedSurvey;
+        })
     };
 
-    const updateQuestion = (id,field, value) => {
+    const updateQuestion = (id, field, value) => {
         // console.log(id,value)
 
         setSurveyDetails(prev => {
-            const updatedSurvey = {
+            let updatedSurvey = {
                 ...prev,
                 questions:
                     prev.questions.map(q =>
                         q.id === id ?
-                            { ...q, [field]: value } :
+                            {
+                                ...q,
+                                [field]: value,
+                                correctAnswer: []
+                            } :
                             q
                     )
             }
@@ -150,19 +176,18 @@ export default function AddNewSurvey({ funct, survey }) {
                         q.id === questionId ?
                             {
                                 ...q,
-                                ...(q.type === "single" ?
-                                    {correctAnswer:[answerId]} :
-                                    q.type)
-                                // correctAnswer: prev.correctAnswer.map(ca =>
-                                //     q.type === "single" ?
-                                //     {[answerId]} :
-                                //     ca
-                                // )
+                                correctAnswer:
+                                    q.type === "single" ?
+                                        [answerId] :
+                                        q.correctAnswer.includes(answerId) ?
+                                            q.correctAnswer.filter(e => e !== answerId) :
+                                            [...q.correctAnswer, answerId]
+
                             } :
                             q
                     )
             }
-            console.log(updatedSurvey.questions[0])
+            // console.log(updatedSurvey.questions[0])
             return updatedSurvey
         })
 
@@ -195,7 +220,37 @@ export default function AddNewSurvey({ funct, survey }) {
     };
 
     const handleCreateSurvey = async () => {
-        console.log(surveyDetails)
+        
+
+        const surveyToSend = {
+            title: surveyDetails.title,
+            description: surveyDetails.description,
+            totalAttempts: surveyDetails.totalAttempts,
+            randomOrder: surveyDetails.randomOrder,
+            userId: user.id,
+            questions: surveyDetails.questions.map(q=>({
+                    name: q.name,
+                    type: q.type,
+                    correctAnswer: q.correctAnswer,
+                    openAnswer: q.openAnswer,
+                    answers: q.answers.map(a=>({
+                            answerName: a.answerName,
+                            chosenCount: a.chosenCount
+                    }))
+            }))
+        }
+        console.log("new",surveyToSend)
+        
+        try {
+            const response = await axios.post(`http://localhost:8080/survey/new`, surveyToSend ,{
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                },
+            });
+
+        } catch (error) {
+            console.log(error)
+        }
     };
     const handleUpdateSurvey = async () => {
         console.log(surveyDetails)

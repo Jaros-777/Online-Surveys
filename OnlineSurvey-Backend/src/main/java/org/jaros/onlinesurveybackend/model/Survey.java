@@ -28,6 +28,7 @@ public class Survey {
     @JsonManagedReference
     private List<Question> questions;
 
+    //for data loader
     public Survey( int userId, String title, String description, int totalAttempts, Boolean randomOrder, List<Question> questions) {
         this.userId = userId;
         this.title = title;

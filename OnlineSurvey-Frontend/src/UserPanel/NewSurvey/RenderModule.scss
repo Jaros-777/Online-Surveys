@@ -38,18 +38,6 @@
 
     input {
         width: 60%;
-        // padding: 1rem;
-        // margin: 0;
-        // border: none;
-        // border-bottom: 2px solid black;
-        // border-radius: 0;
-        // border-top-left-radius: 10px;
-        // border-top-right-radius: 10px;
-        // &:focus{
-        //     outline: none;
-        //     box-shadow: none;
-        //     background-color: rgb(204, 204, 204);
-        // }
     }
 
     #answer-type {
@@ -59,9 +47,6 @@
         justify-content: space-between;
         margin-top: 2rem;
 
-        // p {
-        //     font-size: 1rem;
-        // }
 
         .simple-button{
             background-color: rgba(255, 255, 255, 0);
@@ -71,6 +56,10 @@
             border: 2px solid var(--main-grey);
             padding: 0.6rem 1rem;
             border-radius: 12px;
+            
+            &:last-child{
+                margin-right: 0.5rem;
+            }
 
             &:hover{
                 background-color: var(--darker-grey);
@@ -78,9 +67,6 @@
         }
     }
 
-    // #info {
-    //     margin: 2rem 0;
-    // }
 
     .answer {
         display: flex;
@@ -107,4 +93,5 @@
             }
         }
     }
+
 }

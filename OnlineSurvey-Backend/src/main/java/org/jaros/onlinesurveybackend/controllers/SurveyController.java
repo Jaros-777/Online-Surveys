@@ -1,6 +1,7 @@
 package org.jaros.onlinesurveybackend.controllers;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.jaros.onlinesurveybackend.dto.NewSurveyDTO;
 import org.jaros.onlinesurveybackend.model.Survey;
 import org.jaros.onlinesurveybackend.model.SurveyRequest;
 import org.jaros.onlinesurveybackend.services.SurveyService;
@@ -35,9 +36,8 @@ public class SurveyController {
 
 
     @PostMapping("/new")
-    public ResponseEntity<?> addSurvey(JSONPObject newSurvey) {
-
-        return surveyService.addSurvey(newSurvey);
+    public ResponseEntity<?> addSurvey(@RequestBody NewSurveyDTO survey) {
+        return surveyService.addSurvey(survey);
     }
 
 
