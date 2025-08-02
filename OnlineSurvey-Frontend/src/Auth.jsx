@@ -7,7 +7,7 @@ import CloseIcon from "./assets/icon-close.png"
 
 const Auth = (props) => {
     const [isRegistering, setIsRegistering] = useState(false);
-    const [form, setForm] = useState({ email: "", password: "" });
+    const [form, setForm] = useState({ email: props.mail, password: "" });
     const [badLogging, setBadLogging] = useState(false)
     const navigate = useNavigate();
 

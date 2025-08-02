@@ -71,7 +71,10 @@ export default function Question({ chooseAnswer, question }) {
     return (
         <div id="question-container">
                 <h1>{question.name}</h1>
+                {question.type == "open" ? 
                 <h3>[ {question.type} type answer ]</h3>
+            : null}
+                
                 {question.type == "open" ?
                     <textarea value={chooseAnswer[0]} onChange={(e)=>handleChooseAnswer(null, e.target.value)}></textarea>
                     :

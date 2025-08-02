@@ -4,8 +4,10 @@ import RenderModule from "./RenderModule.jsx"
 import { v4 as uuidv4 } from 'uuid';
 import { User } from "../../App.jsx";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AddNewSurvey({ funct, survey }) {
+    const nav = useNavigate();
     const [user, setUser] = useContext(User)
     const [surveyDetails, setSurveyDetails] = useState(
         {
@@ -248,6 +250,8 @@ export default function AddNewSurvey({ funct, survey }) {
                 },
             });
 
+            nav("/")
+
         } catch (error) {
             console.log(error)
         }
@@ -268,9 +272,10 @@ export default function AddNewSurvey({ funct, survey }) {
     return (
         <div id="new-survey-container">
             <h1>Create a new survey</h1>
+            <form onSubmit={funct == "new" ? handleCreateSurvey : handleUpdateSurvey}>
             <section>
                 <p>Survey Title</p>
-                <input type="text" placeholder="Enter survey title" onChange={(e) => setSurveyDetails({ ...surveyDetails, title: e.target.value })} value={surveyDetails.title} />
+                <input required type="text" placeholder="Enter survey title" onChange={(e) => setSurveyDetails({ ...surveyDetails, title: e.target.value })} value={surveyDetails.title} />
             </section>
             <section>
                 <p>Survey Description</p>
@@ -299,7 +304,8 @@ export default function AddNewSurvey({ funct, survey }) {
                     <p>Random order</p>
                 </div>
             </div>
-            <button onClick={funct == "new" ? handleCreateSurvey : handleUpdateSurvey}>Create survey</button>
+            <button type="submit">Create survey</button>
+            </form>
         </div>
     );
 }

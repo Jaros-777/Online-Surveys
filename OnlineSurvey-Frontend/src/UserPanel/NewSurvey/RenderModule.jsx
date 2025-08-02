@@ -21,12 +21,13 @@ export default function RenderModule({question, deleteQuestion, updateQuestion, 
                 placeholder="Enter your question"
                 onChange={(e)=>updateQuestion(question.id,"name", e.target.value)}
                 value={question.name}
+                required
             />
 
             <div id="answer-type">
-                {/* <button style={question.type === "single" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "single")} className="simple-button">Single correct answer</button>
-                <button style={question.type === "multiple" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "multiple")} className="simple-button">Multiple correct answer</button> */}
-                <button style={question.type === "open" ? {backgroundColor:"var(--darker-grey)", marginBottom:"5rem"} : {backgroundColor:"white"}} onClick={() => handleChangeType()} className="simple-button">Open question</button>
+                <button style={question.type === "single" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "single")} className="simple-button">Single choice</button>
+                <button style={question.type === "multiple" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "multiple")} className="simple-button">Multiple choice</button>
+                <button style={question.type === "open" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "open")} className="simple-button">Open question</button>
                 {/* <button style={question.type === "any" ? {backgroundColor:"var(--darker-grey)"} : null} onClick={() => updateQuestion(question.id, "type", "any")} className="simple-button">Witchout correct answer</button> */}
                 
                 
@@ -42,8 +43,9 @@ export default function RenderModule({question, deleteQuestion, updateQuestion, 
                                 placeholder="Answer"
                                 value={e.answerName}
                                 onChange={(ev) => updateAnswers(question.id, e.id, ev.target.value)}
+                                required
                             />
-                            {(question.type === "any" ? null : <input name={`correct-${question.id}`} onChange={(ev) => toggleCorrectAnswer(question.id, e.id, ev.target.checked)} checked={question.correctAnswer.includes(e.id)} type={question.type === "single" ? "radio" : "checkbox"} />)}
+                            {/* {(question.type === "any" ? null : <input name={`correct-${question.id}`} onChange={(ev) => toggleCorrectAnswer(question.id, e.id, ev.target.checked)} checked={question.correctAnswer.includes(e.id)} type={question.type === "single" ? "radio" : "checkbox"} />)} */}
 
                             <button onClick={() => deleteAnswer(question.id, e.id)}>Delete</button>
                         </div>

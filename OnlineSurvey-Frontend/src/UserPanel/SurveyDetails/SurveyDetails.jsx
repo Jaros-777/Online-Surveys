@@ -1,6 +1,6 @@
 import "./SurveyDetails.scss"
 import Details from "./Details"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AddNewSurvey from "../NewSurvey/AddNewSurvey"
 
 
@@ -13,13 +13,17 @@ export default function SurveyDetails({ survey, setCurrentSection }) {
 
 
     const copyToClickBoardFunc = () => {
-        navigator.clipboard.writeText(window.location.origin +"/survey/"+ surveyDetails.id)
+        navigator.clipboard.writeText(window.location.origin + "/survey/" + surveyDetails.id)
         setInfoContainerVisibility(true)
         setTimeout(() => {
             setInfoContainerVisibility(false)
         }, 1000);
 
     }
+
+    useEffect(() => {
+        window.dispatchEvent(new Event("resize"));
+    }, []);
 
     const loadingPage = () => {
 
@@ -37,7 +41,7 @@ export default function SurveyDetails({ survey, setCurrentSection }) {
                 <div id="link-to-survey">
                     <div id="link-text">
                         <small>Link to survey</small>
-                        <p>{window.location.origin +"/survey/"+ surveyDetails.id}</p>
+                        <p>{window.location.origin + "/survey/" + surveyDetails.id}</p>
                     </div>
                     <button onClick={copyToClickBoardFunc}>Copy to clickboard</button>
                     {infoContainerVisibility ?
@@ -52,7 +56,7 @@ export default function SurveyDetails({ survey, setCurrentSection }) {
                 </div>
                 <h3>Results:</h3>
                 {surveyDetails.questions.map((e, index) => (
-                    <Details key={e.id} index={index+1} totalAttempts={surveyDetails.totalAttempts} question={e}></Details>
+                    <Details key={e.id} index={index + 1} totalAttempts={surveyDetails.totalAttempts} question={e}></Details>
                 ))}
             </div>
 

@@ -15,6 +15,11 @@ export default function UserPanel() {
     const [surveyList, setSurveyList] = useState([])
     const [currentSection, setCurrentSection] = useState(<FrontPage></FrontPage>)
 
+    useEffect(() => {
+        document.body.style.overflow = 'unset';
+        
+    }, []);
+
 
     const checkLogged = () => {
         const token = localStorage.getItem("token");
@@ -31,7 +36,7 @@ export default function UserPanel() {
             // console.log("Nie jesteś zalogowany");
             setIsLogged(false)
             setUser({ email: null, token: null, id: null });
-            
+
         }
     }
 
@@ -47,61 +52,75 @@ export default function UserPanel() {
             // console.log(user.token)
             // console.log(response.data)
             setSurveyList(response.data)
+            // window.location.reload()
 
         } catch (error) {
             console.log(error)
             LogOut();
+
         }
 
     }
-    const LogOut=()=>{
+    const LogOut = () => {
         localStorage.removeItem("email")
         localStorage.removeItem("token")
         localStorage.removeItem("id")
         localStorage.clear();
+        setUser({
+            id: null,
+            email: null,
+            token: null
+        })
         nav("/")
     }
 
-    
+
+
 
     useEffect(() => {
+        
         checkLogged();
-        if (user.token) {
-            // console.log("Rozpoczecie ładowania ankiet")
-            fetchSurveys();
-        }
+    }, []);
 
-    }, [user.token])
+    useEffect(() => {
+        
+        if (user.token && user.id) {
+            fetchSurveys();
+            
+        }
+    }, [user.token, user.id]);
 
     if (!isLogged) {
-        return <p style={{textAlign:"center", marginTop:"10rem", fontSize:"4rem"}}>You are not logged in</p>
+        
+        return <p style={{ textAlign: "center", marginTop: "10rem", fontSize: "4rem" }}>You are not logged in</p>
+        
     }
 
     return (
         <>
-            
-                <div id="panel-container">
-                    <div id="panel-content">
-                        <div id="options">
-                            <button onClick={() => setCurrentSection(<AddNewSurvey funct={"new"}></AddNewSurvey>)}>New survey</button>
-                            <h3>My surveys</h3>
-                            <ul>
-                                {surveyList.length == 0 ? <p>You don't have any surveys yet </p> :
-                                    surveyList.map((e) => (
-                                        <li onClick={()=>setCurrentSection(<SurveyDetails key={e.id} setCurrentSection={setCurrentSection} survey={e}></SurveyDetails>)} key={e.id} className="surveyButton">
-                                            <p>{e.title}</p>
-                                            <p>{e.totalAttempts} received</p>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                        <div id="content">
-                            {currentSection}
-                        </div>
+
+            <div id="panel-container">
+                <div id="panel-content">
+                    <div id="options">
+                        <button onClick={() => setCurrentSection(<AddNewSurvey key={Date.now()} funct={"new"}></AddNewSurvey>)}>New survey</button>
+                        <h3>My surveys</h3>
+                        <ul>
+                            {surveyList.length == 0 ? <p>You don't have any surveys yet </p> :
+                                surveyList.map((e) => (
+                                    <li onClick={() => setCurrentSection(<SurveyDetails key={e.id + Date.now()} setCurrentSection={setCurrentSection} survey={e}></SurveyDetails>)} key={e.id} className="surveyButton">
+                                        <p>{e.title}</p>
+                                        <p>{e.totalAttempts} received</p>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    <div id="content">
+                        {currentSection}
                     </div>
                 </div>
-            
+            </div>
+
 
         </>
     )

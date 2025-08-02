@@ -41,7 +41,7 @@ export default function MainPage() {
     return (
         <>
             <div id="main-page">
-                {loginFormVisibility ? <Auth handleEnterLogin={handleEnterLogin}></Auth> : null}
+                {loginFormVisibility ? <Auth mail={mail} handleEnterLogin={handleEnterLogin}></Auth> : null}
 
                 <div id="first">
                     <div id="description">
@@ -61,7 +61,7 @@ export default function MainPage() {
                             <li>Mobile-optimized surveys for any device</li>
                         </ul>
                         <div id="start-container">
-                            <input type="text" value={mail} onChange={(e) => { setMail(e.target.value) }} placeholder="Twój email" />
+                            <input type="text" value={mail} onChange={(e) => { setMail(e.target.value) }} placeholder="Your email" />
                             <button onClick={() => handleEnterLogin()}>Create survey</button>
                         </div>
                     </div>

@@ -66,10 +66,14 @@ export default function Details({ index, question, totalAttempts }) {
                                         </div>
 
                                     </div>
-                                </> :
+                                </> 
+                                :
+                                e.answerName.length > 0 ?
                                 <div className="openQuestion">
                                     <p>{e.answerName}</p>
+                                    
                                 </div>
+                                : null
                             }
                         </li>
                     ))}
