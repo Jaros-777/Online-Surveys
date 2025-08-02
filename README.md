@@ -21,7 +21,7 @@ The project serves an educational purpose - it's a testing ground for learning m
 
 ## 📸 Screenshots  
 <img width="1659" height="871" alt="image" src="https://github.com/user-attachments/assets/1bb01157-2a11-4537-bd2b-058fa4324dee" />  
-<img width="1659" height="875" alt="image" src="https://github.com/user-attachments/assets/919a677d-4271-4798-9c0c-1086cd6c242e" />  
+<img width="1654" height="875" alt="Zrzut ekranu 2025-08-02 185813" src="https://github.com/user-attachments/assets/cd7c867e-a14e-41f2-93ba-913ac47f5e9f" />
 <img width="1658" height="873" alt="image" src="https://github.com/user-attachments/assets/ec3deff8-c30a-47ad-8636-6fda36421050" />  
 
 
