@@ -1,5 +1,5 @@
 # 📝 Online Surveys ( under development )  
-Online Surveys is a simple but functional web project that allows anyone - from curious students to future data analysts - to create their own online surveys and collect responses from users. The project was created with learning in mind, not to dominate the survey tooli market.... still 😉  
+Online Surveys is a basic web application created in Spring Boot, enabling the creation and management of online surveys. The project presents the fundamentals of REST API and integration with a database using JPA and H2. This is a demo version, which will be gradually developed with new functionalities and improvements.  
 
 ## 🛠 Technologies  
 
@@ -16,9 +16,12 @@ Online Surveys is a simple but functional web project that allows anyone - from 
 ## 🚀 Purpose of the project  
 The project serves an educational purpose - it's a testing ground for learning modern web technologies, client-server architecture and creating full-fledged CRUD applications.  
 
+## 🎥 Video
+[![Demo](https://img.youtube.com/vi/2phzTX5dobg/0.jpg)](https://www.youtube.com/watch?v=2phzTX5dobg)
+
 ## 📸 Screenshots  
 <img width="1659" height="871" alt="image" src="https://github.com/user-attachments/assets/1bb01157-2a11-4537-bd2b-058fa4324dee" />  
-<img width="1659" height="875" alt="image" src="https://github.com/user-attachments/assets/919a677d-4271-4798-9c0c-1086cd6c242e" />  
+<img width="1654" height="875" alt="Zrzut ekranu 2025-08-02 185813" src="https://github.com/user-attachments/assets/cd7c867e-a14e-41f2-93ba-913ac47f5e9f" />
 <img width="1658" height="873" alt="image" src="https://github.com/user-attachments/assets/ec3deff8-c30a-47ad-8636-6fda36421050" />  
 
 
