@@ -1,5 +1,5 @@
 # 📝 Online Surveys ( under development )  
-Online Surveys is a simple but functional web project that allows anyone - from curious students to future data analysts - to create their own online surveys and collect responses from users. The project was created with learning in mind, not to dominate the survey tooli market.... still 😉  
+Online Surveys is a basic web application created in Spring Boot, enabling the creation and management of online surveys. The project presents the fundamentals of REST API and integration with a database using JPA and H2. This is a demo version, which will be gradually developed with new functionalities and improvements.  
 
 ## 🛠 Technologies  
 
