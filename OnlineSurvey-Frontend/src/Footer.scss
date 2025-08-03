@@ -18,3 +18,22 @@ footer {
         }
     }
 }
+
+@media only screen and (max-width: 1200px){
+    footer {
+    width: 100%;
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+
+    #content {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1rem 0.5rem;
+        text-align: center;
+    }
+}
+}

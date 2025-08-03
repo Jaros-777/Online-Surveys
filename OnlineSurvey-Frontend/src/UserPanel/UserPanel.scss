@@ -6,13 +6,13 @@
     justify-content: center;
     margin-top: 3rem;
     #panel-content{
-        width: 70rem;
+        max-width: 70rem;
+        width: 80%;
         min-height: 42rem;
         background-color: white;
-        padding: 1rem;
         display: flex;
         justify-content: center;
-        padding: 2rem 0;
+        padding: 2rem 1rem;
         border-radius: 20px;
 
         #options{
@@ -76,4 +76,35 @@
             justify-content: center;
         }
     }
+}
+
+@media only screen and (max-width: 1200px) {
+  #panel-container{
+    margin-top: 1rem;
+
+    #panel-content{
+        width: 100%;
+        min-height: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 1rem;
+        border-radius: 20px;
+
+        #options{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            border-bottom: 2px solid var(--main-grey);
+            margin-bottom: 2rem;
+
+        }
+        #content{
+            width: 100%;
+            padding: 0.5rem;
+        }
+    }
+}
 }

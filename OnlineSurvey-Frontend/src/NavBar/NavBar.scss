@@ -7,3 +7,19 @@ nav{
     border-bottom: 2px solid var(--main-grey);
     background-color: white;
 }
+
+@media only screen and (max-width: 600px){
+    nav{
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    border-bottom: 2px solid var(--main-grey);
+    background-color: white;
+
+    h3{
+        display: none;
+    }
+}
+}
